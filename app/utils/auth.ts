@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -17,16 +18,16 @@ export async function handleLogin() {
     const scope = 'user-read-private user-read-email user-top-read user-read-recently-played user-read-playback-state';
     const stateKey = 'spotify_auth_state';
     cookies().set(stateKey, state);
-    
+    console.log(`redirecting to spotify login page...`);
     redirect(`https://accounts.spotify.com/authorize?response_type=code&client_id=${process.env.SPOTIFY_CLIENT_ID}&scope=${scope}&redirect_uri=${process.env.REDIRECT_URI}&state=${state}`)
-    // return new Response(null, {
-    //     status: 302,
-    //     headers: {
-    //         'Location': `https://accounts.spotify.com/authorize?response_type=code&client_id=${process.env.SPOTIFY_CLIENT_ID}&scope=${scope}&redirect_uri=${process.env.REDIRECT_URI}&state=${state}`,
-    //         'Set-Cookie': `${stateKey}=${state};`
-    //     }
-    // })
 }
 
 
-export async function handleLogout() { }
+export async function handleLogout() {
+    console.log(`logout route hit, clearing cookies...`);
+    cookies().delete('spotify_auth_state');
+    cookies().delete('token');
+
+    // dump cache
+    redirect(`/logout`);
+}

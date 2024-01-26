@@ -31,10 +31,10 @@ export default  function Home() {
 
   const handleClick =  () => {
     try {
-      console.log("logging in");
       handleLogin();
     }
     catch (err) {
+      console.log(err);
     }
   }
   
