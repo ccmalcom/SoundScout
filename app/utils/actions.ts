@@ -1,6 +1,5 @@
 'use server' //default as of v14
 import { Buffer } from "buffer";
-import { cookies } from "next/headers";
 
 export async function generateRandomString() {
     let text = '';
@@ -11,7 +10,7 @@ export async function generateRandomString() {
     return text;
 };
 
-export async function getToken(type: string, code?: string, refresh_token?: string) {
+export async function getNewToken(type: string, code?: string, refresh_token?: string) {
     const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
     const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
     const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -60,31 +59,45 @@ export async function getToken(type: string, code?: string, refresh_token?: stri
 export async function processToken(token: string, method: string){
     let result;
     function decodeToken(token: string){
+        console.log('decoding token');
         let buff = Buffer.from(token, 'base64');
         let text = buff.toString('ascii');
         return text;
     }
     function encodeToken(token: string){
+        console.log('encoding token');
         let buff = Buffer.from(token);
         let text = buff.toString('base64');
         return text;
     }
 
     function retrieveRefreshToken(token: string){
+        console.log('retrieving refresh token');
         let text= token.split('%')[1];
         return text;
     }
 
+    function retrieveAccessToken(token: string){
+        console.log('retrieving access token');
+        let trim= token.split('%')[0];
+        let text=trim.slice(7);
+        return text;
+    }
+
     if(method === 'decode'){
-        result = decodeToken(token).toString();
+        result = await decodeToken(token).toString();
     } else if(method === 'encode'){
-        result = encodeToken(token).toString();
+        result = await encodeToken(token).toString();
     } else if(method === 'refresh'){
         let text = await retrieveRefreshToken(token);
-        result = decodeToken(text).toString();
+        result = await decodeToken(text).toString();
+    } else if(method === 'access'){
+        let text = await retrieveAccessToken(token);
+        result = await decodeToken(text).toString();
     } else {
         throw new Error(`Invalid method: ${method}`);
     }
     return result;
 
 }
+

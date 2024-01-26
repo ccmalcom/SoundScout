@@ -1,5 +1,5 @@
 import { type NextRequest } from 'next/server';
-import { getToken, processToken } from '@/app/utils/actions';
+import { getNewToken, processToken } from '@/app/utils/actions';
 import { redirect } from 'next/navigation';
 
 export async function GET(request: NextRequest) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
         });
     } else {
         try {
-            let response = await getToken('authorization_code', code || '', '');
+            let response = await getNewToken('authorization_code', code || '', '');
             console.log('access token before encoding: ', response.access_token)
             let access_token = await processToken(response.access_token, 'encode');
             let refresh_token = await processToken(response.refresh_token, 'encode');
