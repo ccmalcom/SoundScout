@@ -1,5 +1,6 @@
 'use server' //default as of v14
 import { Buffer } from "buffer";
+import { cookies } from "next/headers";
 
 export async function generateRandomString() {
     let text = '';
@@ -56,42 +57,43 @@ export async function getNewToken(type: string, code?: string, refresh_token?: s
 
 }
 
-export async function processToken(token: string, method: string){
+export async function processToken(token: string, method: string) {
     let result;
-    function decodeToken(token: string){
+    function decodeToken(token: string) {
         console.log('decoding token');
         let buff = Buffer.from(token, 'base64');
         let text = buff.toString('ascii');
         return text;
     }
-    function encodeToken(token: string){
+    function encodeToken(token: string) {
         console.log('encoding token');
         let buff = Buffer.from(token);
         let text = buff.toString('base64');
         return text;
     }
-
-    function retrieveRefreshToken(token: string){
+    //full encrpypted token passed in
+    function retrieveRefreshToken(token: string) {
         console.log('retrieving refresh token');
-        let text= token.split('%')[1];
+        let t = token.split('$')[1];
+        let text = t.split('exp=')[0];
         return text;
     }
 
-    function retrieveAccessToken(token: string){
+    function retrieveAccessToken(token: string) {
         console.log('retrieving access token');
-        let trim= token.split('%')[0];
-        let text=trim.slice(7);
+        let text = token.split('$')[0];
         return text;
     }
 
-    if(method === 'decode'){
+
+    if (method === 'decode') {
         result = await decodeToken(token).toString();
-    } else if(method === 'encode'){
+    } else if (method === 'encode') {
         result = await encodeToken(token).toString();
-    } else if(method === 'refresh'){
+    } else if (method === 'refresh') {
         let text = await retrieveRefreshToken(token);
         result = await decodeToken(text).toString();
-    } else if(method === 'access'){
+    } else if (method === 'access') {
         let text = await retrieveAccessToken(token);
         result = await decodeToken(text).toString();
     } else {
@@ -101,3 +103,37 @@ export async function processToken(token: string, method: string){
 
 }
 
+export async function checkSession() {
+    let token = cookies().get('token')?.value;
+    if (token) {
+        let expiration = token.split('exp=')[1];
+        let date = new Date(expiration);
+        let now = new Date(Date.now());
+        // console.log('expDate: ', date);
+        // console.log('now: ', now);
+        if (date > now) {
+            return 1;
+        } else {
+            return 0;
+        }
+    } else {
+        return -1;
+    }
+}
+
+export async function hourFromNow() {
+    let now = new Date(Date.now());
+    let hour = now.getTime();
+    let addHour = (hour + 3600 * 1000);
+    let timeInOneHourDate = new Date(addHour);
+    return timeInOneHourDate;
+}
+
+export async function logout() {
+    cookies().set('token', '', {
+        httpOnly: true,
+        maxAge: 0,
+        path: '/',
+    });
+    return 1;
+}

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from "@/app/ui/button";
 import Link from 'next/link';
 import Image from 'next/image';
-
 export default function Page() {
     const [name, setName] = useState('')
     const [img, setImg] = useState('')
@@ -21,12 +20,18 @@ export default function Page() {
         } catch (err) {
         }
     }
+    
     return (
         <div>
             <h1>Dashboard</h1>
-            <Button onClick={handleClick}>Click me</Button>
+            <div className='flex flex-row justify-between'>
+                <Button onClick={handleClick}>Click me</Button>
+                <Button color='secondary'> Log out </Button>
+            </div>
             <p>Hey, {name}</p>
-            <Image src={img} alt="profile pic" width={300} height={300} />
+            {img ?
+                <Image src={img} alt="profile pic" width={300} height={300} />
+                : null}
         </div>
     );
 }

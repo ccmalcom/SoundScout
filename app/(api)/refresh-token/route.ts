@@ -1,25 +1,46 @@
-import { type NextRequest } from 'next/server';
-import { getNewToken, processToken } from '@/app/utils/actions';
+import { getNewToken, processToken, hourFromNow } from '@/app/utils/actions';
+import { cookies } from 'next/headers';
 
-export async function GET(request: NextRequest) {
-    console.log(`refresh_token route hit, refreshing access token...`);
+export async function GET() {
+    console.log(`refresh_token route hit, attempting to access token...`);
     // const refresh_token = request.nextUrl.searchParams.get('refresh_token');
-    let token = request.headers.get('cookie')?.split(';').find((c: string) => c.trim().startsWith('token='));
-    console.log('token: ', token);
-    if (token) {
-        let refresh_token = await processToken(token, 'refresh');
-        let { access_token } = await getNewToken('refresh_token', '', refresh_token);
-        let encoded = await processToken(access_token, 'encode');
-        let client_token = encoded + '%' + token.split('%')[1];
-        return new Response(null, {
-            status: 200,
-            headers: {
-                'Set-Cookie': `token=${client_token};`,
-                'Location': '/dashboard'
-            },
-        })
+    let encryptedToken = cookies().get('token')?.value;
+    console.log('encryptedToken: ', encryptedToken);
+    if (encryptedToken) {
+        try {
+            let timeInOneHour = await hourFromNow();
+            let decrypt_refresh_token = await processToken(encryptedToken, 'refresh');
+
+            try{
+
+                let response = await getNewToken('refresh_token', '', decrypt_refresh_token);
+                let new_access_token = await processToken(response.access_token, 'encode');
+                let new_refresh_token = await processToken(decrypt_refresh_token, 'encode');
+                let newEncryptedToken = new_access_token+'$'+new_refresh_token+'&exp='+timeInOneHour;
+                
+                cookies().set('token', newEncryptedToken.toString(), {
+                    httpOnly: true,
+                    maxAge: 3600 * 1000,
+                    path: '/',
+                });
+                
+                return new Response(null, {
+                    status: 200
+                })
+            } catch (error) {
+                console.error(`Error getting new access token: ${error}`);
+                return new Response(null, {
+                    status: 500,
+                });
+            }
+        } catch (error) {
+            console.error(`Error getting refresh token: ${error}`);
+            return new Response(null, {
+                status: 500,
+            });
+        }
     } else {
-        return new Response('no refresh token provided', {
+        return new Response('no token cookie', {
             status: 400
         })
     }

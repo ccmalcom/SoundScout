@@ -1,9 +1,10 @@
-import { NextRequest } from "next/server";
 import { processToken } from "@/app/utils/actions";
+import { cookies } from "next/headers";
 
-export  async function GET(request: NextRequest){
+export  async function GET(){
     console.log(`get profile route hit`)
-    let token = request.headers.get('cookie')?.split(';').find((c: string) => c.trim().startsWith('token='));
+    let token = cookies().get('token')?.value;
+    console.log('token: ', token);
     if (token){
         try {
             const access_token = await processToken(token, 'access');

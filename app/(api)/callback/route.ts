@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server';
-import { getNewToken, processToken } from '@/app/utils/actions';
-import { redirect } from 'next/navigation';
+import { getNewToken, processToken, hourFromNow } from '@/app/utils/actions';
+import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
     console.log(`callback route hit, getting access token...`);
@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const state = request.nextUrl.searchParams.get('state');
     const storedState = request.cookies.get('spotify_auth_state')?.value;
     // console.log(`code: ${code}, state: ${state}, storedState: ${storedState}`);
-
+   
     if (state === null || state !== storedState) {
         return new Response('state_mismatch', {
             status: 401, headers: {
@@ -17,17 +17,24 @@ export async function GET(request: NextRequest) {
         });
     } else {
         try {
+            let timeInOneHour = await hourFromNow();
             let response = await getNewToken('authorization_code', code || '', '');
-            console.log('access token before encoding: ', response.access_token)
+
             let access_token = await processToken(response.access_token, 'encode');
             let refresh_token = await processToken(response.refresh_token, 'encode');
-            let client_token = access_token + '%' + refresh_token;
+
+            let encryptedToken = access_token+'$'+refresh_token+'&exp='+timeInOneHour;
+
+            cookies().set('token', encryptedToken.toString(), {
+                httpOnly: true,
+                maxAge: 3600 * 1000,
+                path: '/',
+            });
             
             return new Response(null, {
                 status: 302,
                 headers: {
                     'Location': '/dashboard',
-                    'Set-Cookie': `token=${client_token};`
                 }
             });
         } catch (error) {
@@ -37,5 +44,4 @@ export async function GET(request: NextRequest) {
             });
         }
     }
-
 }
