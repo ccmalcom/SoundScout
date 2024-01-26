@@ -1,5 +1,6 @@
 import { type NextRequest } from 'next/server';
-import { getToken } from '@/app/utils/actions';
+import { getToken, processToken } from '@/app/utils/actions';
+import { redirect } from 'next/navigation';
 
 export async function GET(request: NextRequest) {
     console.log(`callback route hit, getting access token...`);
@@ -15,15 +16,26 @@ export async function GET(request: NextRequest) {
             }
         });
     } else {
-        let { access_token, refresh_token } = await getToken('authorization_code', code || '');
-
-        return new Response(null, {
-            status: 302,
-            headers: {
-                'Location': '/dashboard',
-                'Set-Cookie': `spotify_auth_state=; access_token=${access_token}; refresh_token=${refresh_token};`
-            }
-        });
+        try {
+            let response = await getToken('authorization_code', code || '', '');
+            console.log('access token before encoding: ', response.access_token)
+            let access_token = await processToken(response.access_token, 'encode');
+            let refresh_token = await processToken(response.refresh_token, 'encode');
+            let client_token = access_token + '%' + refresh_token;
+            
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    'Location': '/dashboard',
+                    'Set-Cookie': `token=${client_token};`
+                }
+            });
+        } catch (error) {
+            console.error(`Error setting tokens: ${error}`);
+            return new Response(null, {
+                status: 500,
+            });
+        }
     }
 
 }

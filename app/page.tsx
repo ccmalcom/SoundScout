@@ -1,8 +1,11 @@
 import { nunito } from "@/app/ui/fonts";
 import Link from 'next/link';
 import { Button } from "./ui/button";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Home() {
+
+  
   return (
     <main className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col min-h-[500px] min-w-[500px]">
