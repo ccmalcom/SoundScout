@@ -44,7 +44,7 @@ export default function Page() {
         console.log('events', events);
         setEvents(events);
     }
-    
+
 
     const logout = async () => {
         try {
@@ -70,19 +70,40 @@ export default function Page() {
             {img ?
                 <Image src={img} alt="profile pic" width={300} height={300} />
                 : null}
-            <div>
-                <h2>Top Artists</h2>
-                <ul>
-                    {topArtists.map((artist: Artist) => {
-                        return (
-                            <li key={artist.id}>
-                                <h3 className='text-xl'>{artist.name}</h3>
-                                <p>Popularity: {artist.popularity}</p>
-                                {/* <Image src={artist.images[1].url} alt={artist.name} width={100} height={100} /> */}
-                            </li>
-                        )
-                    })}
-                </ul>
+            <div className='flex '>
+                <div>
+                    <h2>Top Artists</h2>
+                    <ul>
+                        {topArtists.map((artist: Artist) => {
+                            return (
+                                <li key={artist.id}>
+                                    <h3 className='text-xl'>{artist.name}</h3>
+                                    <p>Popularity: {artist.popularity}</p>
+                                    {/* <Image src={artist.images[1].url} alt={artist.name} width={100} height={100} /> */}
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+                <div>
+                    <h2>Events</h2>
+                    <ul>
+                        {events.map((event: Event) => {
+                            return (
+                                <li key={event.id}>
+                                    <h3 className='text-xl'>{event.name}</h3>
+                                    <p>Date: {event.date}</p>
+                                    <p>Venue: {event.location.venueName}</p>
+                                    <p>City: {event.location.city}</p>
+                                    <p>State: {event.location.state}</p>
+                                    <p>Address: {event.location.addressLines}</p>
+                                    <p>Postal Code: {event.location.postalCode}</p>
+                                    {/* <Image src={event.images[1].url} alt={event.name} width={100} height={100} /> */}
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
             </div>
         </div>
     );
