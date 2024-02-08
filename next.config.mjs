@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'scontent-lga3-2.xx.fbcdn.net',
+                hostname: '**.xx.fbcdn.net',
                 port: '',
             },
         ],

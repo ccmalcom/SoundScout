@@ -1,6 +1,8 @@
 'use server' //default as of v14
 import { Buffer } from "buffer";
 import { cookies } from "next/headers";
+import { Event, Artist } from '@/app/utils/types';
+
 
 export async function generateRandomString() {
     let text = '';
@@ -137,3 +139,4 @@ export async function logout() {
     });
     return 1;
 }
+

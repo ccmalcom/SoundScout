@@ -19,10 +19,8 @@ export async function GET(request: NextRequest) {
         try {
             let timeInOneHour = await hourFromNow();
             let response = await getNewToken('authorization_code', code || '', '');
-
             let access_token = await processToken(response.access_token, 'encode');
             let refresh_token = await processToken(response.refresh_token, 'encode');
-
             let encryptedToken = access_token+'$'+refresh_token+'&exp='+timeInOneHour;
 
             cookies().set('token', encryptedToken.toString(), {

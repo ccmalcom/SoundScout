@@ -1,0 +1,6 @@
+query params:
+keyword: artist name,
+latlong: latitude and longitude of the location,
+radius: radius of the search area,
+unit: unit of the radius,
+startDateTime: filter with a start date after this date (use now for the current date and time),

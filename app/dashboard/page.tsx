@@ -1,13 +1,20 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/app/ui/button";
-import Link from 'next/link';
 import Image from 'next/image';
 import { handleLogout } from '@/app/utils/auth';
+import { getTop, mapArtists } from '@/app/utils/spotify';
+import { Artist, Event } from '@/app/utils/types';
+import { getEventsForTopArtists, mapEvents } from '@/app/utils/ticketmaster';
+import { get } from 'http';
+
 export default function Page() {
     const [name, setName] = useState('')
     const [img, setImg] = useState('')
+    const [topArtists, setTopArtists] = useState(Array<Artist>);
+    const [events, setEvents] = useState(Array<Event>);
+
 
     const getProfile = async () => {
         try {
@@ -23,6 +30,22 @@ export default function Page() {
         }
     }
 
+    const getArtists = async () => {
+        console.log('getting top artists...');
+        let res = await getTop('artists')
+        let artists = await mapArtists(res.items);
+        console.log('artists', artists);
+        setTopArtists(artists);
+    }
+
+    const getEvents = async () => {
+        console.log('getting events for top artists...');
+        let events = await getEventsForTopArtists(topArtists);
+        console.log('events', events);
+        setEvents(events);
+    }
+    
+
     const logout = async () => {
         try {
             'trying to log out'
@@ -37,12 +60,30 @@ export default function Page() {
             <h1>Dashboard</h1>
             <div className='flex flex-row justify-between'>
                 <Button onClick={getProfile}>Click me to fetch profile</Button>
+                <Button onClick={getArtists}>Click me to fetch top artists</Button>
+                {/* <Button onClick={getEvents}>Click me to fetch events</Button> */}
+                {topArtists.length > 0 ? <Button onClick={getEvents}>Click me to fetch events for top artist</Button> : null}
+
                 <Button color='secondary' onClick={logout}> Log out </Button>
             </div>
             <p>Hey, {name}</p>
             {img ?
                 <Image src={img} alt="profile pic" width={300} height={300} />
                 : null}
+            <div>
+                <h2>Top Artists</h2>
+                <ul>
+                    {topArtists.map((artist: Artist) => {
+                        return (
+                            <li key={artist.id}>
+                                <h3 className='text-xl'>{artist.name}</h3>
+                                <p>Popularity: {artist.popularity}</p>
+                                {/* <Image src={artist.images[1].url} alt={artist.name} width={100} height={100} /> */}
+                            </li>
+                        )
+                    })}
+                </ul>
+            </div>
         </div>
     );
 }
