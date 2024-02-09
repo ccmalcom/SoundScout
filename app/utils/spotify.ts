@@ -4,14 +4,7 @@ import { cookies } from "next/headers";
 import { processToken } from '@/app/utils/actions'
 import { Artist } from '@/app/utils/types';
 
-export async function logout() {
-    cookies().set('token', '', {
-        httpOnly: true,
-        maxAge: 0,
-        path: '/',
-    });
-    return 1;
-}
+
 export async function getTop(type: string) {
     console.log('getTop function hit, getting top ', type);
     let token = cookies().get('token')?.value;
@@ -24,24 +17,20 @@ export async function getTop(type: string) {
                     Authorization: `Bearer ${access_token}`,
                 },
             });
-
-            if (!request.ok) {
-                console.warn(`Error getting access token: ${request.status}`);
-                throw new Error(`Error getting access token: ${request.statusText}`);
-            }
             const result = await request.json();
             // console.log('result from fetch:', result);
-            return result;
+            const artists = await mapArtists(result.items);
+            return artists;
 
         } catch (error) {
             // Handle the error appropriately
             throw new Error(`Error getting access token: ${error}`);
+            // return [];
         }
 
     } else {
-        return new Response('no token provided', {
-            status: 400
-        })
+        console.error('no token provided');
+        return [];
     }
 }
 
@@ -58,10 +47,6 @@ export async function getProfile() {
                 },
             });
 
-            if (!request.ok) {
-                console.warn(`Error getting profile: ${request.status}`);
-                throw new Error(`Error getting profile: ${request.statusText}`);
-            }
             const result = await request.json();
             return result;
 
@@ -74,6 +59,16 @@ export async function getProfile() {
         return new Response('no token provided', {
             status: 400
         })
+    }
+}
+
+export async function testGetProfile() {
+    try {
+        let profile = await getProfile();
+        return profile;
+    }
+    catch (err) {
+        console.log(err);
     }
 }
 

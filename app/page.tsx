@@ -1,7 +1,6 @@
 'use client'
 
 import { nunito } from "@/app/ui/fonts";
-import Link from 'next/link';
 import { Button } from "./ui/button";
 import { checkSession } from "@/app/utils/actions";
 import { useState, useEffect } from "react";

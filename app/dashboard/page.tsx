@@ -14,36 +14,6 @@ export default function Page() {
     const [topArtists, setTopArtists] = useState(Array<Artist>);
     const [events, setEvents] = useState(Array<Event>);
 
-
-
-    useEffect(() => {
-        //shouldonly call once
-        if (name === '' || img === '') {
-            getProfile().then((res) => {
-                setName(res.display_name);
-                setImg(res.images[1].url);
-            })
-        }
-        if (topArtists.length === 0) {
-            getTop('artists').then((res) => {
-                mapArtists(res.items).then((artists) => {
-                    setTopArtists(artists);
-                })
-            })
-        }
-
-
-    }, [name, img, topArtists, events])
-
-    const getEvents = async () => {
-        console.log('getting events for top artists...');
-        let events = await getEventsForTopArtists(topArtists);
-        console.log('events', events);
-        setEvents(events);
-    }
-
-
-
     const click = async (type: string) => {
         console.log('clicking');
         if (type === 'events') {
@@ -64,7 +34,29 @@ export default function Page() {
                 console.log(err)
             }
         }
+
     }
+
+    let renderCount = 0;
+    useEffect(() => {
+        console.log('useEffect hit');
+        renderCount++;
+        console.log('render count:', renderCount);
+        if (renderCount > 1) {
+            getProfile().then(profile => {
+                setName(profile.display_name);
+                setImg(profile.images[1].url);
+            }).catch(err => {
+                console.log(err);
+            });
+
+            getTop('artists').then(artist => {
+                setTopArtists(artist);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [renderCount]);
 
     return (
         <div>
@@ -75,7 +67,7 @@ export default function Page() {
                 {/* <Button onClick={getEvents}>Click me to fetch events</Button> */}
                 {topArtists.length > 0 ? <Button onClick={() => click('events')}>Click me to fetch events for top artist</Button> : null}
 
-                <Button color='secondary' onClick={()=>click('logout')}> Log out </Button>
+                <Button color='secondary' onClick={() => click('logout')}> Log out </Button>
             </div>
             <p>Hey, {name}</p>
             {img ?
