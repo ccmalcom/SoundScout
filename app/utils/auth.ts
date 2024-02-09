@@ -27,7 +27,6 @@ export async function handleLogout() {
     console.log(`logout route hit, clearing cookies...`);
     cookies().delete('spotify_auth_state');
     cookies().delete('token');
-
     // dump cache
     redirect(`/logout`);
 }

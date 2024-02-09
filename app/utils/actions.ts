@@ -131,12 +131,5 @@ export async function hourFromNow() {
     return timeInOneHourDate;
 }
 
-export async function logout() {
-    cookies().set('token', '', {
-        httpOnly: true,
-        maxAge: 0,
-        path: '/',
-    });
-    return 1;
-}
+
 

@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/app/ui/button";
 import Image from 'next/image';
 import { handleLogout } from '@/app/utils/auth';
-import { getTop, mapArtists } from '@/app/utils/spotify';
+import { getTop, mapArtists, getProfile } from '@/app/utils/spotify';
 import { Artist, Event } from '@/app/utils/types';
 import { getEventsForTopArtists, mapEvents } from '@/app/utils/ticketmaster';
-import { get } from 'http';
 
 export default function Page() {
     const [name, setName] = useState('')
@@ -16,27 +15,25 @@ export default function Page() {
     const [events, setEvents] = useState(Array<Event>);
 
 
-    const getProfile = async () => {
-        try {
-            fetch('/profile')
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                    setName(data.display_name)
-                    setImg(data.images[1].url)
-                })
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
-    const getArtists = async () => {
-        console.log('getting top artists...');
-        let res = await getTop('artists')
-        let artists = await mapArtists(res.items);
-        console.log('artists', artists);
-        setTopArtists(artists);
-    }
+    useEffect(() => {
+        //shouldonly call once
+        if (name === '' || img === '') {
+            getProfile().then((res) => {
+                setName(res.display_name);
+                setImg(res.images[1].url);
+            })
+        }
+        if (topArtists.length === 0) {
+            getTop('artists').then((res) => {
+                mapArtists(res.items).then((artists) => {
+                    setTopArtists(artists);
+                })
+            })
+        }
+
+
+    }, [name, img, topArtists, events])
 
     const getEvents = async () => {
         console.log('getting events for top artists...');
@@ -46,12 +43,26 @@ export default function Page() {
     }
 
 
-    const logout = async () => {
-        try {
-            'trying to log out'
-            await handleLogout()
-        } catch (err) {
-            console.log(err)
+
+    const click = async (type: string) => {
+        console.log('clicking');
+        if (type === 'events') {
+            try {
+                console.log('getting events for top artists...');
+                let events = await getEventsForTopArtists(topArtists);
+                setEvents(events);
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+        if (type === 'logout') {
+            try {
+                console.log('logging out');
+                await handleLogout()
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 
@@ -59,12 +70,12 @@ export default function Page() {
         <div>
             <h1>Dashboard</h1>
             <div className='flex flex-row justify-between'>
-                <Button onClick={getProfile}>Click me to fetch profile</Button>
-                <Button onClick={getArtists}>Click me to fetch top artists</Button>
+                {/* <Button onClick={() => click('profile')}>Click me to fetch profile</Button> */}
+                {/* <Button onClick={() => click('artists')}>Click me to fetch top artists</Button> */}
                 {/* <Button onClick={getEvents}>Click me to fetch events</Button> */}
-                {topArtists.length > 0 ? <Button onClick={getEvents}>Click me to fetch events for top artist</Button> : null}
+                {topArtists.length > 0 ? <Button onClick={() => click('events')}>Click me to fetch events for top artist</Button> : null}
 
-                <Button color='secondary' onClick={logout}> Log out </Button>
+                <Button color='secondary' onClick={()=>click('logout')}> Log out </Button>
             </div>
             <p>Hey, {name}</p>
             {img ?
