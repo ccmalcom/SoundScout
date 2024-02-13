@@ -7,6 +7,11 @@ const nextConfig = {
                 hostname: '**.xx.fbcdn.net',
                 port: '',
             },
+            {
+                protocol: 'https',
+                hostname: 'i.scdn.co',
+                port: '',
+            }
         ],
     },
 };

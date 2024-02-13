@@ -1,11 +1,16 @@
 'use client'
 
-import { nunito } from "@/app/ui/fonts";
+import { figtree } from "@/app/ui/fonts";
 import { Button } from "./ui/button";
 import { checkSession } from "@/app/utils/actions";
 import { useState, useEffect } from "react";
 import { handleLogin } from '@/app/utils/auth';
 import Image from "next/image";
+import { InlineInput } from "./ui/inlineInput";
+
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 export default  function Home() {
   //session management
@@ -40,14 +45,18 @@ export default  function Home() {
   
   return (
     <main className="flex justify-center items-center min-h-screen">
-      <div className="flex flex-col min-h-[500px] min-w-[500px]">
-        <Image src='/spotifyLarge.svg' alt='spotify logo' height={200} width={200} />
-        
-        <p className={`${nunito.className} flex-1 min-h-[30%] flex items-center justify-center`}>
-          this is where the user will log in
-        </p>
-        <div className="flex-1 min-h-[30%] flex items-center justify-center">
-          <Button onClick={handleClick}>click to login</Button>
+      <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
+        <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within 
+
+        <InlineInput placeholder=" distance" /> miles
+        <br />
+        of
+        <InlineInput placeholder=" location" />
+        </h1>
+
+
+        <div className="flex items-center justify-end  min-h-[20vh] p-5">
+          <Button onClick={handleClick}>click to login to Spotify</Button>
         </div>
       </div>
     </main>

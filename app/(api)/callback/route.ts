@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
             return new Response(null, {
                 status: 302,
                 headers: {
-                    'Location': '/dashboard',
+                    'Location': '/welcome',
                 }
             });
         } catch (error) {
