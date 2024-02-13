@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { processToken } from '@/app/utils/actions'
 import { Artist } from '@/app/utils/types';
+import { Track } from '@/app/utils/types';
 
 
 export async function getTop(type: string) {
@@ -19,8 +20,14 @@ export async function getTop(type: string) {
             });
             const result = await request.json();
             // console.log('result from fetch:', result);
-            const artists = await mapArtists(result.items);
-            return artists;
+            if (type === 'artists') {
+                const artists = await mapArtists(result.items);
+                return artists;
+            } else if (type === 'tracks'){
+                const tracks = await mapTracks(result.items);
+                return tracks;
+            }
+            
 
         } catch (error) {
             // Handle the error appropriately
@@ -85,6 +92,22 @@ export async function mapArtists(artists: Array<Object>) {
     });
     artistMap.sort((a: any, b: any) => b.popularity - a.popularity);
     return artistMap;
+}
+
+function mapTracks(tracks: Array<Track>) {
+    const trackMap: Array<Track> = [];
+    tracks.map((track: any) => {
+        let newTrack: Track = {
+            name: track.name,
+            popularity: track.popularity,
+            images: track.album.images,
+            id: track.id,
+            // album: track.album.name
+        }
+        trackMap.push(newTrack);
+    });
+    trackMap.sort((a: any, b: any) => b.popularity - a.popularity);
+    return trackMap;
 }
 
 // export async function getTopArtists() {

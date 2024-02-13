@@ -21,3 +21,11 @@ export type Event = {
     }
     Artist?: Artist;
 }
+
+export type Track = {
+    name: string;
+    // album: string;
+    popularity: number;
+    id: string;
+    images: Array<string>;
+}
