@@ -11,6 +11,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'i.scdn.co',
                 port: '',
+            },
+            {
+                protocol: 'https',
+                hostname: 'via.placeholder.com',
+                port: '',
             }
         ],
     },
