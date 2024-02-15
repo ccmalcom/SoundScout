@@ -5,41 +5,60 @@ import { processToken } from '@/app/utils/actions'
 import { Artist } from '@/app/utils/types';
 import { Track } from '@/app/utils/types';
 
+const token = cookies().get('token')?.value;
 
-export async function getTop(type: string) {
-    console.log('getTop function hit, getting top ', type);
-    let token = cookies().get('token')?.value;
+export async function getTopArtists() {
+    console.log('getTopArtists function hit');
     if (token) {
         let access_token = await processToken(token, 'access');
         try {
-            let request = await fetch(`https://api.spotify.com/v1/me/top/${type}`, {
+            let request = await fetch(`https://api.spotify.com/v1/me/top/artists`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
             });
             const result = await request.json();
-            // console.log('result from fetch:', result);
-            if (type === 'artists') {
-                const artists = await mapArtists(result.items);
-                return artists;
-            } else if (type === 'tracks'){
-                const tracks = await mapTracks(result.items);
-                return tracks;
-            }
-            
-
-        } catch (error) {
-            // Handle the error appropriately
-            throw new Error(`Error getting access token: ${error}`);
-            // return [];
+            const artists = await mapArtists(result.items);
+            return artists;
         }
+        catch (err) {
+            console.log(err);
+        }
+    }
+    else {
+        console.error('no token provided');
+        return;
+    }
+}
 
-    } else {
+export async function getTopTracks() {
+    console.log('getTopTracks function hit');
+    if (token) {
+        let access_token = await processToken(token, 'access');
+        try {
+            let request = await fetch(`https://api.spotify.com/v1/me/top/tracks`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            });
+            const result = await request.json();
+            const tracks = await mapTracks(result.items);
+            return tracks;
+        }
+        catch (err) {
+            console.log(err);
+            return [];
+        }
+    }
+    else {
         console.error('no token provided');
         return [];
     }
 }
+
+
 
 export async function getProfile() {
     console.log('getProfile function hit');
@@ -94,7 +113,7 @@ export async function mapArtists(artists: Array<Object>) {
     return artistMap;
 }
 
-function mapTracks(tracks: Array<Track>) {
+async function mapTracks(tracks: Array<Track>) {
     const trackMap: Array<Track> = [];
     tracks.map((track: any) => {
         let newTrack: Track = {
@@ -102,7 +121,7 @@ function mapTracks(tracks: Array<Track>) {
             popularity: track.popularity,
             images: track.album.images,
             id: track.id,
-            // album: track.album.name
+            album: track.album.name
         }
         trackMap.push(newTrack);
     });

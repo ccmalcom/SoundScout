@@ -2,7 +2,7 @@
 export type Artist = {
         name: string;
         popularity: number;
-        images: Array<string>;
+        images: Array<Image>;
         id: string;
     }
 
@@ -19,13 +19,19 @@ export type Event = {
         addressLines: string;
         postalCode: string;
     }
-    Artist?: Artist;
+    artist?: string;
 }
 
 export type Track = {
     name: string;
-    // album: string;
+    album: string;
     popularity: number;
     id: string;
     images: Array<string>;
+}
+
+export type Image={
+    url: string;
+    height: number;
+    width: number;
 }

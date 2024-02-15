@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/app/ui/button";
 import Image from 'next/image';
 import { handleLogout } from '@/app/utils/auth';
-import { getTop, mapArtists, getProfile } from '@/app/utils/spotify';
+import {  getProfile, getTopArtists, getTopTracks } from '@/app/utils/spotify';
 import { Artist, Event, Track } from '@/app/utils/types';
 import { getEventsForTopArtists, mapEvents } from '@/app/utils/ticketmaster';
 import NavBar from '../ui/NavBar';
@@ -45,14 +45,14 @@ export default function Page() {
                 console.log(err);
             });
 
-            getTop('artists').then(artist => {
+            getTopArtists().then(artist => {
                 if(artist)
                 setTopArtists(artist);
             }).catch(err => {
                 console.log(err);
             });
 
-            getTop('tracks').then(track => {
+            getTopTracks().then(track => {
                 if(track)
                 setTopTracks(track);
             }

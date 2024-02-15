@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function ArtistCard({ artist }: Readonly<{ artist: Artist }>) {
 
     if(!artist) return (<div>No Artists Found</div>);
-    let img = artist.images[0]? artist.images[0] : 'https://via.placeholder.com/150';
+    let img = artist.images[2].url? artist.images[2].url : 'https://via.placeholder.com/150';
     return (
         <div className="artist-card grid grid-cols-3 items-center text-center w-[100%]">
             <div className='flex justify-center'>
