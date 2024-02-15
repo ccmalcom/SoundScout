@@ -13,32 +13,6 @@ export default function TopArtists( {topArtists}: {topArtists: Array<Artist>}) {
                 )
             })}
             
-            {/* <div className="grid grid-cols-2">
-                <div>
-                    <h2>Artist</h2>
-                    <ul>
-                        {topArtists.map((artist: Artist) => {
-                            return (
-                                <li key={artist.id}>
-                                    {artist.name}
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
-                <div>
-                    <h2>Popularity</h2>
-                    <ul>
-                        {topArtists.map((artist: Artist) => {
-                            return (
-                                <li key={artist.id}>
-                                    {artist.popularity}
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
-            </div> */}
         </div>
     );
 }

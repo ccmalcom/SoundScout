@@ -1,21 +1,19 @@
-
+import TrackCard from "./TrackCard";
 
 export default function TopTracks( {topTracks}: {topTracks: any[]}) {
     return (
         <div className="col-span-3  text-center">
             <h1>Top Tracks</h1>
-            <div>
-                {/* <h2>Track</h2> */}
-                <ul>
+            <div className="grid grid-cols-3">
+
                     {topTracks.map((track: any) => {
+                        console.log('track:', track);
                         return (
-                            <li key={track.id}>
-                                {track.name}
-                            </li>
+                            <TrackCard track={track} key={track.id} />
                         )
                     })}
-                </ul>
             </div>
+
             
         </div>
     );

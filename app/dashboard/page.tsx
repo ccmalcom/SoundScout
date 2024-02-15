@@ -1,16 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { Button } from "@/app/ui/button";
-import Image from 'next/image';
-import { handleLogout } from '@/app/utils/auth';
-import {  getProfile, getTopArtists, getTopTracks } from '@/app/utils/spotify';
+import { getProfile, getTopArtists, getTopTracks } from '@/app/utils/spotify';
 import { Artist, Event, Track } from '@/app/utils/types';
 import { getEventsForTopArtists, mapEvents } from '@/app/utils/ticketmaster';
 import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
-import { get } from 'http';
 
 export default function Page() {
     const [name, setName] = useState('')
@@ -46,15 +42,15 @@ export default function Page() {
             });
 
             getTopArtists().then(artist => {
-                if(artist)
-                setTopArtists(artist);
+                if (artist)
+                    setTopArtists(artist);
             }).catch(err => {
                 console.log(err);
             });
 
             getTopTracks().then(track => {
-                if(track)
-                setTopTracks(track);
+                if (track)
+                    setTopTracks(track);
             }
             ).catch(err => {
                 console.log(err);
@@ -63,19 +59,18 @@ export default function Page() {
         }
     }, [renderCount]);
 
-    const changePage = async() => {
+    const changePage = async () => {
         console.log('changing page');
         let eventSection = document.querySelector('.events');
         let dashboard = document.querySelector('.dashboard');
         if (page === 'dashboard') {
-            if(events.length === 0)
-            {
+            if (events.length === 0) {
 
                 getEvents();
             }
-                dashboard?.classList.add('text-gray-700');
-                eventSection?.classList.remove('text-gray-700');
-                setPage('events');
+            dashboard?.classList.add('text-gray-700');
+            eventSection?.classList.remove('text-gray-700');
+            setPage('events');
 
         } else {
             eventSection?.classList.add('text-gray-700');
@@ -83,10 +78,10 @@ export default function Page() {
             setPage('dashboard');
         }
     }
-
+    // img = String(img)
     return (
         <div>
-            <NavBar />
+            <NavBar profileImg={img}/>
             <div className='text-white w-[100vw] h-[100vh] mt-10'>
                 <div className='flex flex-row justify-center'>
                     <button >

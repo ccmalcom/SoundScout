@@ -3,11 +3,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { handleLogout } from '@/app/utils/auth';
+import Image from 'next/image';
 
-export default  function Links(){
+export default  function Links({img}: {img:string}){
     // circle of profile img with caret (to indicate dropdown) to the right
     // when clicked, dropdown with 'logout' and 'settings' options
-    const img ='https://via.placeholder.com/150';
+    const url= img ? img :'https://via.placeholder.com/150';
     const dropdown = document.querySelector('.dropdown');
     
     
@@ -30,7 +31,8 @@ export default  function Links(){
             // caret flush to bottom border of img
         <div>
             <button className="flex items-center" onClick={toggle}>
-                <img src={img} alt="profile" className="h-12 w-12 rounded-full" />
+                {/* <img src={img} alt="profile" className="h-12 w-12 rounded-full" /> */}
+                <Image src={url} height={12} width={12} alt="profile" className="h-12 w-12 rounded-full" />
                 <FontAwesomeIcon icon={faCaretDown} className="ml-2 text-green" />
             </button>
             <div className="relative hidden dropdown">

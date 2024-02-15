@@ -121,7 +121,9 @@ async function mapTracks(tracks: Array<Track>) {
             popularity: track.popularity,
             images: track.album.images,
             id: track.id,
-            album: track.album.name
+            album: track.album.name,
+            // artist: track.artist.name
+
         }
         trackMap.push(newTrack);
     });

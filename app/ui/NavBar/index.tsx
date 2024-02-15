@@ -2,7 +2,7 @@ import Logo from "@/app/ui/NavBar/logo";
 import Links from "@/app/ui/NavBar/links";
 
 
-export default function NavBar() {
+export default function NavBar({profileImg}: {profileImg: string}) {
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-slate p-6">
@@ -11,7 +11,7 @@ export default function NavBar() {
             </div>
 
             <div>
-                <Links />
+                <Links img={profileImg} />
             </div>
         </nav>
     );

@@ -16,6 +16,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'via.placeholder.com',
                 port: '',
+            },
+            {
+                protocol: 'https',
+                hostname: '**.ticketm.net',
+                port: '',
             }
         ],
     },
