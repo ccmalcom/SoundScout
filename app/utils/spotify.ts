@@ -4,6 +4,8 @@ import { cookies } from "next/headers";
 import { processToken } from '@/app/utils/actions'
 import { Artist } from '@/app/utils/types';
 import { Track } from '@/app/utils/types';
+import useSWR from 'swr';
+
 
 const token = cookies().get('token')?.value;
 
@@ -58,8 +60,6 @@ export async function getTopTracks() {
     }
 }
 
-
-
 export async function getProfile() {
     console.log('getProfile function hit');
     let token = cookies().get('token')?.value;
@@ -88,15 +88,7 @@ export async function getProfile() {
     }
 }
 
-export async function testGetProfile() {
-    try {
-        let profile = await getProfile();
-        return profile;
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
+
 
 export async function mapArtists(artists: Array<Object>) {
     const artistMap: Array<Artist> = [];
@@ -130,10 +122,3 @@ async function mapTracks(tracks: Array<Track>) {
     trackMap.sort((a: any, b: any) => b.popularity - a.popularity);
     return trackMap;
 }
-
-// export async function getTopArtists() {
-//     console.log('getTopArtists function hit');
-//     let res = await getTop('artists');
-//     let artists = await mapArtists(res.items);
-//     return artists;
-// }

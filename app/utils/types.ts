@@ -36,3 +36,8 @@ export type Image={
     height: number;
     width: number;
 }
+
+export type User = {
+    display_name: string;
+    images: Array<Image>;
+}

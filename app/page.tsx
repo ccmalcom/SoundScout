@@ -18,7 +18,7 @@ export default  function Home() {
 
   useEffect(() => {
     console.log("checking session");
-    console.log(session);
+    // console.log(session);
     checkSession().then((res) => {
       setSession(res);
     });

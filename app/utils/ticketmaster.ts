@@ -53,7 +53,7 @@ export const getEventsForTopArtists = async (topArtists: Array<Artist>) => {
             console.warn(`Error getting events for ${artist.name}: ${error}`);
         }
     }
-    console.log('eventList', eventList);
+    // console.log('eventList', eventList);
     return eventList;
 };
 
@@ -73,7 +73,7 @@ export async function mapEvents(events: Array<Object>, artist?: Artist) {
                 addressLines: event._embedded.venues[0].address.line1,
                 postalCode: event._embedded.venues[0].postalCode
             },
-            Artist: artist
+            // artist: event.
         }
         eventMap.push(newEvent);
     });
