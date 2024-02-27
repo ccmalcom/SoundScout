@@ -22,13 +22,8 @@ export default function Page() {
         }
     });
     const { topArtists, isLoading: artistsLoading, isError: artistsError } = useTopArtists();
-    const { topTracks, isLoading: tracksLoading, isError: tracksError } = useTopTracks();
-    let artistNames = topArtists?.map((artist: any) => artist.name);
-    // const { events, isLoading: eventsLoading, isError: eventsError} = useEvents(artistNames);
-
 
     const [page, setPage] = useState('dashboard');
-
 
     const changePage = async () => {
         console.log('changing page');
@@ -45,7 +40,7 @@ export default function Page() {
             setPage('dashboard');
         }
     }
-    // img = String(img)
+
     return (
         <div>
             <NavBar />

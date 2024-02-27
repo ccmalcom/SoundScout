@@ -5,7 +5,8 @@ import { useUser } from "@/app/utils/hooks";
 
 export default function NavBar() {
     const { user, isLoading, isError } = useUser();
-    if (isLoading) return <div>Loading...</div>
+    let img = 'https://via.placeholder.com/150';
+    if (!isLoading) img = user.images[0].url;
     if (isError){
         console.log('error loading user, ' + isError);
         return <div>Error loading user...</div>
@@ -17,7 +18,7 @@ export default function NavBar() {
             </div>
 
             <div>
-                <Links img={user.images[0].url} />
+                <Links img={img} />
             </div>
         </nav>
     );
