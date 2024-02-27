@@ -7,6 +7,7 @@ import Events from '../ui/Events';
 import { Event } from '@/app/utils/types';
 import { useTopArtists, useTopTracks, useEvents } from '@/app/utils/hooks';
 import { getEventsForTopArtists } from '../utils/ticketmaster';
+import Footer from '../ui/Footer';
 
 export default function Page() {
     const { topArtists, isLoading: artistsLoading, isError: artistsError } = useTopArtists();
@@ -37,7 +38,7 @@ export default function Page() {
     return (
         <div>
             <NavBar />
-            <div className='text-white w-[100vw] h-[100vh] mt-10'>
+            <div className='text-white w-[100vw] mt-10'>
                 <div className='flex flex-row justify-center'>
                     <button >
                         <h1 className='pr-5 dashboard' onClick={changePage}>Dashboard</h1>
@@ -50,6 +51,7 @@ export default function Page() {
                     {page === 'dashboard' ? <Dashboard /> : <Events topArtists={topArtists} />}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
