@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
     const code = request.nextUrl.searchParams.get('code');
     const state = request.nextUrl.searchParams.get('state');
     const storedState = request.cookies.get('spotify_auth_state')?.value;
-    // console.log(`code: ${code}, state: ${state}, storedState: ${storedState}`);
 
     if (state === null || state !== storedState) {
         return new Response('state_mismatch', {
@@ -33,7 +32,7 @@ export async function GET(request: NextRequest) {
                 status: 302,
                 headers: {
                     // 'Location': '/welcome',
-                    'Location': '/',
+                    'Location': '/dashboard',
                 },
             });
         } catch (error) {

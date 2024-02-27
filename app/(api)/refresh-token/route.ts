@@ -3,7 +3,6 @@ import { cookies } from 'next/headers';
 
 export async function GET() {
     console.log(`refresh_token route hit, attempting to access token...`);
-    // const refresh_token = request.nextUrl.searchParams.get('refresh_token');
     let encryptedToken = cookies().get('token')?.value;
     console.log('encryptedToken: ', encryptedToken);
     if (encryptedToken) {

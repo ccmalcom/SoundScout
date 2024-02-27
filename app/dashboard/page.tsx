@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
