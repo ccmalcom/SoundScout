@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
                 headers: {
                     // 'Location': '/welcome',
                     'Location': '/',
-                }
+                },
             });
         } catch (error) {
             console.error(`Error setting tokens: ${error}`);
