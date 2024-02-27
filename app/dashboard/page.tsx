@@ -46,7 +46,7 @@ export default function Page() {
                         <h1 className='pl-5 text-gray-700 events' onClick={changePage}>Events</h1>
                     </button>
                 </div>
-                <div>
+                <div className='flex justify-center'>
                     {page === 'dashboard' ? <Dashboard /> : <Events topArtists={topArtists} />}
                 </div>
             </div>
