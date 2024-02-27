@@ -12,7 +12,7 @@ export default function Events( {topArtists}: {topArtists: Array<Artist>}) {
         return <div>Error loading events...</div>
     }
     return (
-        <div className="col-span-3 flex flex-col text-center justify-center mt-10 w-[90vw]">
+        <div className="col-span-3 flex flex-col text-center justify-start mt-10 w-[90vw] min-h-[80vh]">
             <h1 className="mb-10">Events</h1>
             <ul>
                 {events.map((event: Event) => {
