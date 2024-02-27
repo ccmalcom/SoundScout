@@ -18,75 +18,75 @@ export default function Home() {
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState("");
 
-  useEffect(() => {
-    console.log("checking session");
-    // console.log(session);
-    checkSession().then((res) => {
-      setSession(res);
-    });
-  }, [session]);
 
-  if (session == 1) {
-    //redirect to dashboard
-    return new Promise((resolve) => {
-      resolve(
-        (window.location.href = "/dashboard")
-      );
-    }
+  checkSession().then((res) => {
+    setSession(res);
+    
+  });
+
+if (session == 1) {
+  //redirect to dashboard
+  return new Promise((resolve) => {
+    resolve(
+      (window.location.href = "/dashboard")
     );
-  } else if (session == -1) {
-    return new Promise((resolve) => {
-      resolve(
-        (window.location.href = "/refresh-token")
-      );
-    });
   }
-  const handleDistanceChange = (e: any) => {
-    const newDistance = e.target.value;
-    setDistance(newDistance);
-    saveUserSettings(newDistance, location);
-  };
-
-  const handleLocationChange = (e: any) => {
-    const newLocation = e.target.value;
-    setLocation(newLocation);
-    saveUserSettings(distance, newLocation);
-  };
-
-  // Save user settings to local storage
-  const saveUserSettings = (newDistance: any, newLocation: any) => {
-    const userSettings = {
-      distance: newDistance,
-      location: newLocation
-    };
-    localStorage.setItem('userSettings', JSON.stringify(userSettings));
-  };
-
-  const handleClick = () => {
-    try {
-      handleLogin();
-    }
-    catch (err) {
-      console.log(err);
-    }
-  }
-
-  return (
-    <main className="flex justify-center items-center min-h-screen">
-      <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
-        <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within
-
-          <InlineInput placeholder=" distance" key='distance' onChangeCapture={handleDistanceChange} /> miles
-          <br />
-          of
-          <InlineInput placeholder=" location" key='location' onChangeCapture={handleLocationChange} />
-        </h1>
-
-
-        <div className="flex items-center justify-end  min-h-[20vh] p-5">
-          <Button onClick={handleClick}>click to login to Spotify</Button>
-        </div>
-      </div>
-    </main>
   );
+} else if (session == -1) {
+  return new Promise((resolve) => {
+    resolve(
+      (window.location.href = "/refresh-token")
+    );
+  }
+  );
+}
+
+const handleDistanceChange = (e: any) => {
+  const newDistance = e.target.value;
+  setDistance(newDistance);
+  saveUserSettings(newDistance, location);
+};
+
+const handleLocationChange = (e: any) => {
+  const newLocation = e.target.value;
+  setLocation(newLocation);
+  saveUserSettings(distance, newLocation);
+};
+
+// Save user settings to local storage
+const saveUserSettings = (newDistance: any, newLocation: any) => {
+  const userSettings = {
+    distance: newDistance,
+    location: newLocation
+  };
+  localStorage.setItem('userSettings', JSON.stringify(userSettings));
+};
+
+const handleClick = () => {
+  try {
+    handleLogin();
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
+return (
+  <main className="flex justify-center items-center min-h-screen">
+    <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
+      <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within
+
+        <InlineInput placeholder=" distance" key='distance' onChangeCapture={handleDistanceChange} /> miles
+        <br />
+        of
+        <InlineInput placeholder=" location" key='location' onChangeCapture={handleLocationChange} />
+      </h1>
+
+
+      <div className="flex items-center justify-end  min-h-[20vh] p-5">
+        <Button onClick={handleClick}>click to login to Spotify</Button>
+      </div>
+    </div>
+  </main>
+);
 }

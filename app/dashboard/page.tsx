@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
@@ -59,7 +59,11 @@ export default function Page() {
                     </button>
                 </div>
                 <div className='flex justify-center'>
-                    {page === 'dashboard' ? <Dashboard /> : <Events topArtists={topArtists} />}
+                    {page === 'dashboard' ?
+                        <Dashboard />
+                        :
+                        <Events topArtists={topArtists} />
+                    }
                 </div>
             </div>
             <Footer />
