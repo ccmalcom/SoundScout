@@ -9,13 +9,19 @@ export async function GET() {
     const mapTracks = (tracks: Array<Track>) => {
         const trackMap: Array<Track> = [];
         tracks.map((track: any) => {
+            // console.log('track: ', track);
+            let albumName = 'Single'
+            if(track.album.album_type !== 'SINGLE'){
+                albumName = track.album.name;
+            }
+
             let newTrack: Track = {
                 name: track.name,
                 popularity: track.popularity,
                 images: track.album.images,
                 id: track.id,
-                album: track.album.name,
-                // artist: track.artist.name
+                album: albumName,
+                artist: track.artists[0].name
 
             }
             trackMap.push(newTrack);

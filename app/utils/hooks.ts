@@ -29,7 +29,7 @@ const fetcherWithArtist = async ([url, artistName]: [string, string]) => {
 };
 
 export function useUser() {
-    console.log('###SERVER### useUser function hit');
+    console.log('###HOOK### useUser function hit');
     const { data, error, isLoading } = useSWR('/spotify/user', fetcher);
     return {
         user: data,
@@ -39,7 +39,7 @@ export function useUser() {
 }
 
 export function useTopArtists() {
-    console.log('###SERVER### useTopArtists function hit');
+    console.log('###HOOK### useTopArtists function hit');
     const { data, error, isLoading } = useSWR('/spotify/top-artists', fetcher);
     return {
         topArtists: data,
@@ -49,7 +49,7 @@ export function useTopArtists() {
 }
 
 export function useTopTracks() {
-    console.log('###SERVER### useTopTracks function hit');
+    console.log('###HOOK### useTopTracks function hit');
     const { data, error, isLoading } = useSWR('/spotify/top-tracks', fetcher);
     return {
         topTracks: data,
@@ -59,7 +59,7 @@ export function useTopTracks() {
 }
 
 export function useEvents(artistNames: string[]) {
-    console.log('###SERVER### useEvents function hit');
+    console.log('###HOOK### useEvents function hit');
     // const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
     // const artistNames = topArtists.map(artist => artist.name);
 
@@ -73,7 +73,7 @@ export function useEvents(artistNames: string[]) {
 
 
 export function useEvent(artistName: string) {
-    console.log('###SERVER### useEvent function hit');
+    console.log('###HOOK### useEvent function hit');
     const { data, error, isLoading } = useSWR(  ['/ticketmaster/events', artistName], fetcherWithArtist);
     return {
         event: data,

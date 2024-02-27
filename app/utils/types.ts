@@ -12,6 +12,7 @@ export type Event = {
     date: string;
     images: Array<Image>;
     id: string;
+    url: string;
     location:{
         venueName: string;
         city: string;
@@ -25,7 +26,7 @@ export type Event = {
 export type Track = {
     name: string;
     album: string;
-    // artist: string;
+    artist: string;
     popularity: number;
     id: string;
     images: Array<Image>;

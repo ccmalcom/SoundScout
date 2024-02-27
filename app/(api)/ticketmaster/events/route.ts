@@ -11,6 +11,7 @@ function mapEvents(events: Array<Object>) {
             date: event.dates.start.localDate,
             images: event.images,
             id: event.id,
+            url: event.url,
             location: {
                 venueName: event._embedded.venues[0].name,
                 city: event._embedded.venues[0].city.name,
@@ -29,7 +30,7 @@ export async function POST(request: Request): Promise<Response> {
     console.log('getting events for top artists...');
     let req = await request.json();
     const artistNames = req['artistNames'];
-    console.log('artistNames', artistNames);
+    // console.log('artistNames', artistNames);
     const eventList = [];
     const now = new Date(Date.now()).toISOString();
     let formattedNow = now.split('T')[0] + 'T00:00:00Z';

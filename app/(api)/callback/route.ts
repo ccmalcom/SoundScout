@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const state = request.nextUrl.searchParams.get('state');
     const storedState = request.cookies.get('spotify_auth_state')?.value;
     // console.log(`code: ${code}, state: ${state}, storedState: ${storedState}`);
-   
+
     if (state === null || state !== storedState) {
         return new Response('state_mismatch', {
             status: 401, headers: {
@@ -21,14 +21,14 @@ export async function GET(request: NextRequest) {
             let response = await getNewToken('authorization_code', code || '', '');
             let access_token = await processToken(response.access_token, 'encode');
             let refresh_token = await processToken(response.refresh_token, 'encode');
-            let encryptedToken = access_token+'$'+refresh_token+'&exp='+timeInOneHour;
+            let encryptedToken = access_token + '$' + refresh_token + '&exp=' + timeInOneHour;
 
             cookies().set('token', encryptedToken.toString(), {
                 httpOnly: true,
                 maxAge: 3600 * 1000,
                 path: '/',
             });
-            
+
             return new Response(null, {
                 status: 302,
                 headers: {

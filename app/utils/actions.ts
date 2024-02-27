@@ -62,13 +62,13 @@ export async function getNewToken(type: string, code?: string, refresh_token?: s
 export async function processToken(token: string, method: string) {
     let result;
     function decodeToken(token: string) {
-        console.log('decoding token');
+        // console.log('decoding token');
         let buff = Buffer.from(token, 'base64');
         let text = buff.toString('ascii');
         return text;
     }
     function encodeToken(token: string) {
-        console.log('encoding token');
+        // console.log('encoding token');
         let buff = Buffer.from(token);
         let text = buff.toString('base64');
         return text;

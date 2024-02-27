@@ -5,7 +5,6 @@ import { Artist } from '@/app/utils/types';
 export async function GET(){
     console.log('getTopArtists function hit');
     const token = cookies().get('token')?.value;
-
     const mapArtists=(artists: Array<Object>)=> {
         const artistMap: Array<Artist> = [];
         artists.map((artist: any) => {

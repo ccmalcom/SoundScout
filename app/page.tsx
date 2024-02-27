@@ -15,6 +15,8 @@ config.autoAddCss = false
 export default  function Home() {
   //session management
   const [session, setSession] = useState(0);  
+  const [distance, setDistance] = useState(0);
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     console.log("checking session");
@@ -33,6 +35,26 @@ export default  function Home() {
     }
     );
   }
+  const handleDistanceChange = (e: any) => {
+    const newDistance = e.target.value;
+    setDistance(newDistance);
+    saveUserSettings(newDistance, location);
+  };
+
+  const handleLocationChange = (e: any) => {
+    const newLocation = e.target.value;
+    setLocation(newLocation);
+    saveUserSettings(distance, newLocation);
+  };
+
+  // Save user settings to local storage
+  const saveUserSettings = (newDistance: any, newLocation: any) => {
+    const userSettings = {
+      distance: newDistance,
+      location: newLocation
+    };
+    localStorage.setItem('userSettings', JSON.stringify(userSettings));
+  };
 
   const handleClick =  () => {
     try {
@@ -48,10 +70,10 @@ export default  function Home() {
       <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
         <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within 
 
-        <InlineInput placeholder=" distance" /> miles
+        <InlineInput placeholder=" distance" key='distance'/> miles
         <br />
         of
-        <InlineInput placeholder=" location" />
+        <InlineInput placeholder=" location" key='location'/>
         </h1>
 
 

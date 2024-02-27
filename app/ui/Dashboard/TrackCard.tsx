@@ -6,20 +6,26 @@ export default function TrackCard({ track }: Readonly<{ track: Track }>) {
     if (!track) return (<div>No Tracks Found</div>);
 
     return (
-        //card will be rectangle, have gray background, image at top, track name, album name, popularity
-        // album image, track name, album name, popularity
-        <div className="track-card  w-full flex justify-center p-5 ">
-            <div className='track-card-content  text-center w-[80%] bg-gray-900 p-1'>
-                <div className=' flex flex-col items-center justify-center'>
-                    <Image src={track.images[1].url} alt={track.name} width={100} height={100}  />
-                    <h3>{track.name}</h3>
+    
+        <div className="track-card w-full flex justify-center p-5">
+            <div className='track-card-content text-center w-4/5 bg-gray-900 p-1 relative'>
+                <div className='flex flex-col items-center justify-center p-1'>
+                    <div className='relative w-28 h-28'>
+                        {/* Album Image */}
+                        <Image src={track.images[1].url} alt={track.name} layout='fill' className='rounded-full border-2 border-black' />
+                        {/* Vinyl Center */}
+                        <div className="absolute inset-0 flex justify-center items-center">
+                            <div className="vinyl-center w-[25%] h-[25%] bg-slate border-8 border-black rounded-full">
+                            </div>
+                        </div>
+                    </div>
+                    <div className=''>
+                        <h3 className="mt-2">{track.name}</h3>
+                        <p className='text-100 text-gray-500'>{track.album}</p>
+                        <p className='text-100 text-gray-500'>{track.artist}</p>
+                        <p className='text-100 text-gray-500'>Popularity: {track.popularity}</p>
+                    </div>
                 </div>
-                {/* <br /> */}
-                {/* <div className='row-span-2'>
-                    <p className='text-100'>{track.album}</p>
-                    <p className='text-100'>Popularity: {track.popularity}</p>
-                </div> */}
-                
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 
 
 export default async function eventSearch(params: { keyword: string, latlong: string, startDateTime: string, radius: string, unit: string }) {
-    console.log('###SERVER--getting events...');
+    // console.log('###SERVER--getting events...');
     let token = process.env.TM_CLIENT_KEY;
     let { keyword, latlong, startDateTime, radius, unit } = params;
     if (token) {
