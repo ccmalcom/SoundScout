@@ -6,10 +6,11 @@ import { PropagateLoader } from "react-spinners";
 export default function TopArtists() {
     const { topArtists, isLoading, isError } = useTopArtists();
     return (
-        <div className="col-span-2 text-center">
+
+        <div className="col-span-2 text-center min-h-[70vh] min-w-[40vw]">
             <h1>Top Artists</h1>
             {isLoading ? (
-                <div className="flex justify-center items-center min-h-[70vh]"> {/* Adjusted height to account for heading */}
+                <div className="flex justify-center items-center h-full w-full"> 
                     <PropagateLoader color='#1BD760' size={15} />
                 </div>
             ) : isError ? (
@@ -19,7 +20,6 @@ export default function TopArtists() {
                     <ArtistCard artist={artist} key={artist.id} />
                 ))
             )}
-            
         </div>
     );
 }

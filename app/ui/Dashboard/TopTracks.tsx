@@ -6,11 +6,11 @@ export default function TopTracks() {
     const { topTracks, isLoading, isError } = useTopTracks();
 
     return (
-        <div className="col-span-3  text-center">
+        <div className="col-span-3 text-center min-h-[70vh] min-w-[60vw]">
             <h1>Top Tracks</h1>
             {isLoading ? (
-                <div className="flex justify-center items-center min-h-[70vh]"> {/* Adjusted height to account for heading */}
-                    <PropagateLoader color='#1BD760' size={15} />
+                <div className="flex justify-center items-center h-full w-full"> 
+                <PropagateLoader color='#1BD760' size={15} />
                 </div>
             ) : isError ? (
                 <div>Error loading top tracks...</div>
