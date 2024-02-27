@@ -12,9 +12,9 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
 
-export default  function Home() {
+export default function Home() {
   //session management
-  const [session, setSession] = useState(0);  
+  const [session, setSession] = useState(0);
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState("");
 
@@ -26,7 +26,7 @@ export default  function Home() {
     });
   }, [session]);
 
-  if (session == 1){
+  if (session == 1) {
     //redirect to dashboard
     return new Promise((resolve) => {
       resolve(
@@ -34,6 +34,12 @@ export default  function Home() {
       );
     }
     );
+  } else if (session == -1) {
+    return new Promise((resolve) => {
+      resolve(
+        (window.location.href = "/refresh-token")
+      );
+    });
   }
   const handleDistanceChange = (e: any) => {
     const newDistance = e.target.value;
@@ -56,7 +62,7 @@ export default  function Home() {
     localStorage.setItem('userSettings', JSON.stringify(userSettings));
   };
 
-  const handleClick =  () => {
+  const handleClick = () => {
     try {
       handleLogin();
     }
@@ -64,16 +70,16 @@ export default  function Home() {
       console.log(err);
     }
   }
-  
+
   return (
     <main className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
-        <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within 
+        <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within
 
-        <InlineInput placeholder=" distance" key='distance'/> miles
-        <br />
-        of
-        <InlineInput placeholder=" location" key='location'/>
+          <InlineInput placeholder=" distance" key='distance' onChangeCapture={handleDistanceChange} /> miles
+          <br />
+          of
+          <InlineInput placeholder=" location" key='location' onChangeCapture={handleLocationChange} />
         </h1>
 
 

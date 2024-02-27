@@ -25,7 +25,10 @@ export async function GET() {
                 });
                 
                 return new Response(null, {
-                    status: 200
+                    status: 302,
+                    headers: {
+                        'Location': '/dashboard',
+                    },
                 })
             } catch (error) {
                 console.error(`Error getting new access token: ${error}`);
