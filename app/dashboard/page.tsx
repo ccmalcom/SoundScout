@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
-import { useTopArtists } from '@/app/utils/hooks';
 import Footer from '../ui/Footer';
 
 export default function Page() {
@@ -17,7 +16,6 @@ export default function Page() {
     }, []);
     
 
-    const { topArtists, isLoading: artistsLoading, isError: artistsError } = useTopArtists();
 
     const [page, setPage] = useState('dashboard');
 
@@ -49,11 +47,7 @@ export default function Page() {
                     </button>
                 </div>
                 <div className='flex justify-center'>
-                    {page === 'dashboard' ?
-                        <Dashboard />
-                        :
-                        <Events topArtists={topArtists} />
-                    }
+                    {page === 'dashboard' ? <Dashboard /> : <Events  />}
                 </div>
             </div>
             <Footer />

@@ -2,9 +2,11 @@ import { Event, Artist } from "@/app/utils/types";
 import EventCard from "./EventCard";
 import {  useEvents } from "@/app/utils/hooks";
 import { PropagateLoader } from "react-spinners";
+import { useTopArtists } from "@/app/utils/hooks";
 
-export default function Events( {topArtists}: {topArtists: Array<Artist>}) {
-    
+export default function Events() {
+    const { topArtists, isLoading: artistsLoading, isError: artistsError } = useTopArtists();
+
     const artistNames = topArtists.map((artist: Artist) => artist.name);
     const { events, isLoading: eventsLoading, isError: eventsError} = useEvents(artistNames);
     // console.log(events);
