@@ -6,6 +6,7 @@ import { PropagateLoader } from "react-spinners";
 export default function Events( {topArtists}: {topArtists: Array<Artist>}) {
     const artistNames = topArtists.map((artist: Artist) => artist.name);
     const { events, isLoading: eventsLoading, isError: eventsError} = useEvents(artistNames);
+    console.log(events);
 
     return (
         <div className="col-span-3 flex flex-col text-center justify-start mt-10 w-[90vw] min-h-[80vh]">
@@ -16,13 +17,15 @@ export default function Events( {topArtists}: {topArtists: Array<Artist>}) {
                 </div>
             ) : eventsError ? (
                 <div>Error loading events...</div>
-            ) : (
+            ) : events.length === 0? (
+                <div>No events found...</div>
+            ) :
                 <ul>
                     {events.map((event: Event) => (
                         <EventCard event={event} key={event.id} />
                     ))}
                 </ul>
-            )}
+            }
         </div>
     );
 }

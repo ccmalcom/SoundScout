@@ -19,7 +19,7 @@ function mapEvents(events: Array<Object>) {
                 addressLines: event._embedded.venues[0].address.line1,
                 postalCode: event._embedded.venues[0].postalCode
             },
-            
+            // artist: event.
         }
         eventMap.push(newEvent);
     });
@@ -27,16 +27,14 @@ function mapEvents(events: Array<Object>) {
 }
 
 export async function POST(request: Request): Promise<Response> {
-    console.log('###TM ROUTE### top of post request, getting events for top artists...');
+    console.log('getting events for top artists...');
     let req = await request.json();
     const artistNames = req['artistNames'];
     // console.log('artistNames', artistNames);
     const eventList = [];
     const now = new Date(Date.now()).toISOString();
     let formattedNow = now.split('T')[0] + 'T00:00:00Z';
-    console.log('###TM ROUTE### entering for loop');
     for (const artist of artistNames) {
-        console.log('index: ', artistNames.indexOf(artist));
         let params = {
             keyword: artist,
             latlong: '39.791000,-86.148003',
@@ -47,6 +45,7 @@ export async function POST(request: Request): Promise<Response> {
         try {
             const res = await eventSearch(params);
             // const res = await response.json();
+
             if (res._embedded) {
                 const events = await mapEvents(res._embedded.events);
                 console.log('events found for ', artist);
@@ -62,8 +61,7 @@ export async function POST(request: Request): Promise<Response> {
             });
         }
     }
-    console.log('###TM ROUTE### exit for loop');
-    console.log('###TM ROUTE### eventList length', eventList.length);
+    // console.log('eventList', eventList);
     return new Response(JSON.stringify(eventList), {
         status: 200
     });

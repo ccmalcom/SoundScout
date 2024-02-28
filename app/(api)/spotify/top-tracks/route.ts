@@ -26,14 +26,16 @@ export async function GET() {
             }
             trackMap.push(newTrack);
         });
-        trackMap.sort((a: any, b: any) => b.popularity - a.popularity);
+        //! popularity is a number, so we can sort it
+        // trackMap.sort((a: any, b: any) => b.popularity - a.popularity);
         return trackMap;
     }
 
     if (token) {
         let access_token = await processToken(token, 'access');
+        let term = 'short_term';
         try {
-            let request = await fetch(`https://api.spotify.com/v1/me/top/tracks`, {
+            let request = await fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${term}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${access_token}`,

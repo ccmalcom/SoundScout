@@ -6,21 +6,21 @@ import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
 import { useTopArtists, useTopTracks } from '@/app/utils/hooks';
 import Footer from '../ui/Footer';
-import { checkSession } from '../utils/actions';
+// import { checkSession } from '../utils/actions';
 
 export default function Page() {
-    checkSession().then((res) => {
-        if (res === 1) {
-            console.log('session is valid');
-        } else if (res === -1) {
-            console.log('session is invalid-token expired');
-            window.location.href = '/refresh-token';
-        }
-        else {
-            console.log('no session');
-            window.location.href = '/';
-        }
-    });
+    // checkSession().then((res) => {
+    //     if (res === 1) {
+    //         console.log('session is valid');
+    //     } else if (res === -1) {
+    //         console.log('session is invalid-token expired');
+    //         window.location.href = '/refresh-token';
+    //     }
+    //     else {
+    //         console.log('no session');
+    //         window.location.href = '/';
+    //     }
+    // });
     const { topArtists, isLoading: artistsLoading, isError: artistsError } = useTopArtists();
 
     const [page, setPage] = useState('dashboard');

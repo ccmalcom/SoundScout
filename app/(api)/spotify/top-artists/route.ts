@@ -16,14 +16,15 @@ export async function GET(){
             }
             artistMap.push(newArtist);
         });
-        artistMap.sort((a: any, b: any) => b.popularity - a.popularity);
+        // artistMap.sort((a: any, b: any) => b.popularity - a.popularity);
         return artistMap;
     }
 
     if (token) {
         let access_token = await processToken(token, 'access');
+        let term = 'short_term';
         try {
-            let request = await fetch(`https://api.spotify.com/v1/me/top/artists`, {
+            let request = await fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${term}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${access_token}`,

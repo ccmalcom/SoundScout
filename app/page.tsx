@@ -9,11 +9,10 @@ import { InlineInput } from "./ui/inlineInput";
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { get } from "http";
 config.autoAddCss = false
 
 export default function Home() {
-  const [session, setSession] = useState(0);
+  // const [session, setSession] = useState(0);
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState("");
   const [city, setCity] = useState("");
@@ -42,28 +41,28 @@ export default function Home() {
       }); 
     }
   });
+  // checkSession().then((res) => {
+  //   setSession(res);
+  // });
 
-  checkSession().then((res) => {
-    setSession(res);
-  });
 
-  if (session == 1) {
-    //redirect to dashboard
-    return new Promise((resolve) => {
-      resolve(
-        (window.location.href = "/dashboard")
-      );
-    }
-    );
-  } 
-  else if (session == -1) {
-    return new Promise((resolve) => {
-      resolve(
-        (window.location.href = "/refresh-token")
-      );
-    }
-    );
-  }
+  // if (session == 1) {
+  //   //redirect to dashboard
+  //   return new Promise((resolve) => {
+  //     resolve(
+  //       (window.location.href = "/dashboard")
+  //     );
+  //   }
+  //   );
+  // } 
+  // else if (session == -1) {
+  //   return new Promise((resolve) => {
+  //     resolve(
+  //       (window.location.href = "/refresh-token")
+  //     );
+  //   }
+  //   );
+  // }
 
   const handleDistanceChange = (e: any) => {
     const newDistance = e.target.value;

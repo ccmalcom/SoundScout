@@ -21,6 +21,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: '**.ticketm.net',
                 port: '',
+            },
+            {
+                protocol: 'https',
+                hostname: '**.fbsbx.com',
+                port: '',
             }
         ],
     },
