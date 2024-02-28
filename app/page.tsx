@@ -5,7 +5,8 @@ import { Button } from "./ui/button";
 import { useState, useEffect, use } from "react";
 import { handleLogin } from '@/app/utils/auth';
 import { InlineInput } from "./ui/inlineInput";
-import swr, { SWRConfig } from 'swr';
+import { getCityName, getLatLong } from '@/app/utils/actions';
+import { SWRConfig } from 'swr';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -30,14 +31,7 @@ export default function Home() {
     saveUserSettings(distance, city, newLocation);
   }
 
-  const getCityName = async (location: string) => {
-    const lat = location.split(',')[0];
-    const long = location.split(',')[1];
-    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=en`);
-    const data = await res.json();
-    console.log('get city name data:', data);
-    return data.city;
-  }
+
   useEffect(() => {
     if('geolocation' in navigator){
       navigator.geolocation.getCurrentPosition((position) => {
@@ -71,13 +65,7 @@ export default function Home() {
     localStorage.setItem('userSettings', JSON.stringify(userSettings));
   };
 
-  //get lat long from city name
-  const getLatLong = async (city: string) => {
-    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?localityName=${city}&localityLanguage=en`);
-    const data = await res.json();
-    console.log('get lat long data:', data);
-    return data;
-  }
+
 
   const handleClick = () => {
     if(location === "" && city !== ""){
@@ -93,6 +81,7 @@ export default function Home() {
     if(distance==0){
       setDistance(50);
     }
+    saveUserSettings(distance, city, location);
     try {
       handleLogin();
     }
