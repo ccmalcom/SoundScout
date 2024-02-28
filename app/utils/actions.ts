@@ -21,9 +21,9 @@ export async function getNewToken(type: string, code?: string, refresh_token?: s
     const REDIRECT_URI = process.env.REDIRECT_URI;
     let body = '';
     // add debug logs for server logs to see why failing in prod (not in dev)
-    console.log('###actions-getNewToken### type: ', type);
-    console.log('###actions-getNewToken### code: ', code);
-    console.log('###actions-getNewToken### refresh_token: ', refresh_token);
+    // console.log('###actions-getNewToken### type: ', type);
+    // console.log('###actions-getNewToken### code: ', code);
+    // console.log('###actions-getNewToken### refresh_token: ', refresh_token);
 
     if (type === 'refresh_token') {
         const params = new URLSearchParams({
@@ -40,7 +40,7 @@ export async function getNewToken(type: string, code?: string, refresh_token?: s
         body = params.toString();
     }
 
-    console.log('###actions-getNewToken### body: ', body);
+    // console.log('###actions-getNewToken### body: ', body); 
 
 
     try {
