@@ -1,10 +1,7 @@
 ## Backlog
--- geolocation (latlong)
--- refresh token auto get
 -- events
     -- radius picker
     -- location change (zipcode first, then maps api (autocomplete address, convert to latlong))
---dynamic layouts for s/m/l screens
 --fallback components
 
 
