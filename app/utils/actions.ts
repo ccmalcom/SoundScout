@@ -14,10 +14,16 @@ export async function generateRandomString() {
 };
 
 export async function getNewToken(type: string, code?: string, refresh_token?: string) {
+    console.log('###actions-getNewToken### TOP OF FUNCTION');
+
     const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
     const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
     const REDIRECT_URI = process.env.REDIRECT_URI;
     let body = '';
+    // add debug logs for server logs to see why failing in prod (not in dev)
+    console.log('###actions-getNewToken### type: ', type);
+    console.log('###actions-getNewToken### code: ', code);
+    console.log('###actions-getNewToken### refresh_token: ', refresh_token);
 
     if (type === 'refresh_token') {
         const params = new URLSearchParams({
@@ -34,8 +40,11 @@ export async function getNewToken(type: string, code?: string, refresh_token?: s
         body = params.toString();
     }
 
+    console.log('###actions-getNewToken### body: ', body);
+
 
     try {
+        console.log('###actions-getNewToken### fetching token...');
         let request = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {

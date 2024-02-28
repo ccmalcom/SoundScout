@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
     } else {
         try {
             let timeInOneHour = await hourFromNow();
-            
             let response = await getNewToken('authorization_code', code || '', '');
             let access_token = await processToken(response.access_token, 'encode');
             let refresh_token = await processToken(response.refresh_token, 'encode');
