@@ -5,28 +5,18 @@ import { Artist } from './types';
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const fetcherWithArtists = async ([url, artistNames]: [string, string[]]) => {
     // Your fetching logic here, using `url` and `artistNames`
+    const userSettings =  localStorage.getItem('userSettings')
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ artistNames }), // Ensure this matches the expected format on the server
+        body: JSON.stringify({ artistNames, userSettings }), // Ensure this matches the expected format on the server
     });
     if (!response.ok) throw new Error('Failed to fetch');
     return response.json();
 };
-const fetcherWithArtist = async ([url, artistName]: [string, string]) => {
-    // Your fetching logic here, using `url` and `artistNames`
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ artistName }), // Ensure this matches the expected format on the server
-    });
-    if (!response.ok) throw new Error('Failed to fetch');
-    return response.json();
-};
+
 
 export function useUser() {
     console.log('###HOOK### useUser function hit');
@@ -75,7 +65,11 @@ export function useEvents(artistNames: string[]) {
     // const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
     // const artistNames = topArtists.map(artist => artist.name);
 
-    const { data, error, isLoading } = useSWR(artistNames.length > 0 ? ['/ticketmaster/events', artistNames] : null, fetcherWithArtists);
+    const { data, error, isLoading } = useSWR(artistNames.length > 0 ? ['/ticketmaster/events', artistNames] : null, fetcherWithArtists,{
+        dedupingInterval: 60000, 
+        revalidateOnFocus: false, 
+        revalidateOnReconnect: false, 
+    });
     return {
         events: data,
         isLoading,
@@ -84,12 +78,3 @@ export function useEvents(artistNames: string[]) {
 }
 
 
-export function useEvent(artistName: string) {
-    console.log('###HOOK### useEvent function hit');
-    const { data, error, isLoading } = useSWR(  ['/ticketmaster/events', artistName], fetcherWithArtist);
-    return {
-        event: data,
-        isLoading,
-        isError: error
-    }
-}

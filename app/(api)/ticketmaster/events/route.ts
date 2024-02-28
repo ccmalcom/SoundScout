@@ -27,33 +27,38 @@ function mapEvents(events: Array<Object>) {
 }
 
 export async function POST(request: Request): Promise<Response> {
-    console.log('###TM ROUTE### top of post request, getting events for top artists...');
+    // console.log('###TM ROUTE### top of post request, getting events for top artists...');
     let req = await request.json();
+    // console.log('###TM ROUTE### req', req);
     const artistNames = req['artistNames'];
+    const userSettings = JSON.parse(req['userSettings']);
+    // console.log('###TM ROUTE### userSettings', userSettings);
+    const latlong = userSettings.location;
+    const radius = userSettings.distance;
+    // const city = userSettings['city'];
     // console.log('artistNames', artistNames);
     const eventList = [];
     const now = new Date(Date.now()).toISOString();
     let formattedNow = now.split('T')[0] + 'T00:00:00Z';
-    console.log('###TM ROUTE### entering for loop');
+    // console.log('###TM ROUTE### entering for loop');
     for (const artist of artistNames) {
-        console.log('index: ', artistNames.indexOf(artist));
+        // console.log('index: ', artistNames.indexOf(artist));
         let params = {
             keyword: artist,
-            latlong: '39.791000,-86.148003',
+            latlong: latlong,
             startDateTime: formattedNow,
-            radius: '100',
+            radius: radius,
             unit: 'miles'
         }
         try {
             const res = await eventSearch(params);
-            // const res = await response.json();
             if (res._embedded) {
                 const events = await mapEvents(res._embedded.events);
-                console.log('events found for ', artist);
+                // console.log('events found for ', artist);
                 eventList.push(...events);
 
             } else {
-                console.log('no events found for ', artist);
+                // console.log('no events found for ', artist);
             }
         } catch (error) {
             console.warn(`Error getting events for ${artist}: ${error}`);
@@ -62,8 +67,8 @@ export async function POST(request: Request): Promise<Response> {
             });
         }
     }
-    console.log('###TM ROUTE### exit for loop');
-    console.log('###TM ROUTE### eventList length', eventList.length);
+    // console.log('###TM ROUTE### exit for loop');
+    // console.log('###TM ROUTE### eventList length', eventList.length);
     return new Response(JSON.stringify(eventList), {
         status: 200
     });

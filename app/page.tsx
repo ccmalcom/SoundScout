@@ -20,7 +20,7 @@ export default function Home() {
     };
   });
   // const [session, setSession] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState(50);
   const [location, setLocation] = useState("");
   const [city, setCity] = useState("");
   
@@ -80,12 +80,12 @@ export default function Home() {
   }
 
   const handleClick = () => {
-    if(location == "" && city != ""){
+    if(location === "" && city !== ""){
       getLatLong(city).then((res) => {
         handleLocationChange(res.latitude, res.longitude);
       });
     }
-    if(city == "" && location != ""){
+    if(city === "" && location !== ""){
       getCityName(location).then((res) => {
         setCity(res);
       });
@@ -113,7 +113,7 @@ export default function Home() {
       <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
         <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within
 
-          <InlineInput placeholder=" distance" key='distance' onChangeCapture={handleDistanceChange} /> miles
+          <InlineInput placeholder=" distance" key='distance' value={distance} onChange={handleDistanceChange} /> miles
           <br />
           of
           <InlineInput placeholder=" city" key='city' value={city} onChange={handleCityChange} />
