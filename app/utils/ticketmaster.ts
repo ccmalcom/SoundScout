@@ -73,6 +73,8 @@ export async function mapEvents(events: Array<Object>, artist?: Artist) {
                 addressLines: event._embedded.venues[0].address.line1,
                 postalCode: event._embedded.venues[0].postalCode
             },
+            url: event.url,
+            artist: artist?.name
             // artist: event.
         }
         eventMap.push(newEvent);

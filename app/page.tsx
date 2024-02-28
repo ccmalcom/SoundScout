@@ -96,10 +96,18 @@ export default function Home() {
   }
 
   const handleClick = () => {
-    if(location == ""){
+    if(location == "" && city != ""){
       getLatLong(city).then((res) => {
         handleLocationChange(res.latitude, res.longitude);
       });
+    }
+    if(city == "" && location != ""){
+      getCityName(location).then((res) => {
+        setCity(res);
+      });
+    }
+    if(distance==0){
+      setDistance(50);
     }
     try {
       handleLogin();

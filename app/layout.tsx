@@ -16,6 +16,16 @@ export default function RootLayout({
   return (
 
       <html lang="en">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>SpotiFind</title>
+          <link rel="icon" 
+          href="/public/icon.png"
+          type="image/png"
+          sizes="<generated>" />
+          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        </head>
         <body className={figtree.className}>{children}</body>
       </html>
   );
