@@ -10,9 +10,9 @@ import Footer from '../ui/Footer';
 export default function Page() {
     console.log('dashboard page');
     useEffect(() => {
-        console.log('Component mounted');
+        console.log('Dashboard Component mounted');
         return () => {
-            console.log('Component will unmount');
+            console.log('Dashboard Component will unmount');
         };
     }, []);
     

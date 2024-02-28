@@ -2,9 +2,10 @@
 
 import { figtree } from "@/app/ui/fonts";
 import { Button } from "./ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { handleLogin } from '@/app/utils/auth';
 import { InlineInput } from "./ui/inlineInput";
+import swr, { SWRConfig } from 'swr';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -13,7 +14,10 @@ config.autoAddCss = false
 export default function Home() {
   console.log('home page');
   useEffect(() => {
-    console.log('home page useEffect');
+    console.log('Home Component mounted');
+    return () => {
+      console.log('Home Component will unmount');
+    };
   });
   // const [session, setSession] = useState(0);
   const [distance, setDistance] = useState(0);
@@ -98,6 +102,13 @@ export default function Home() {
   }
 
   return (
+    <SWRConfig value={{
+      provider: () => new Map(),
+      onLoadingSlow: (key, config) => console.log(`Loading slow: ${key}`, config),
+      onSuccess: (data, key, config) => console.log(`Success: ${key}`, data),
+      onError: (err, key, config) => console.log(`Error: ${key}`, err),
+    }}>
+
     <main className="flex justify-center items-center min-h-screen">
       <div className="flex flex-col min-h-[60vh] min-w-[50vw] max-w-[800px] justify-between pt-10 p-5">
         <h1 className={`${figtree.className} text-3xl text-white  p-5 text-left`}>Find concerts within
@@ -112,5 +123,7 @@ export default function Home() {
         </div>
       </div>
     </main>
+    </SWRConfig>
+
   );
 }
