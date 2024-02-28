@@ -30,7 +30,11 @@ const fetcherWithArtist = async ([url, artistName]: [string, string]) => {
 
 export function useUser() {
     console.log('###HOOK### useUser function hit');
-    const { data, error, isLoading } = useSWR('/spotify/user', fetcher);
+    const { data, error, isLoading } = useSWR('/spotify/user', fetcher,{
+        dedupingInterval: 60000, 
+        revalidateOnFocus: false, 
+        revalidateOnReconnect: false, 
+    });
     return {
         user: data,
         isLoading,
@@ -40,7 +44,11 @@ export function useUser() {
 
 export function useTopArtists() {
     console.log('###HOOK### useTopArtists function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-artists', fetcher);
+    const { data, error, isLoading } = useSWR('/spotify/top-artists', fetcher,{
+        dedupingInterval: 60000, 
+        revalidateOnFocus: false, 
+        revalidateOnReconnect: false, 
+    });
     return {
         topArtists: data,
         isLoading,
@@ -50,7 +58,11 @@ export function useTopArtists() {
 
 export function useTopTracks() {
     console.log('###HOOK### useTopTracks function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-tracks', fetcher);
+    const { data, error, isLoading } = useSWR('/spotify/top-tracks', fetcher,{
+        dedupingInterval: 60000, 
+        revalidateOnFocus: false, 
+        revalidateOnReconnect: false, 
+    });
     return {
         topTracks: data,
         isLoading,

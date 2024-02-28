@@ -2,8 +2,7 @@
 
 import { figtree } from "@/app/ui/fonts";
 import { Button } from "./ui/button";
-import { checkSession } from "@/app/utils/actions";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { handleLogin } from '@/app/utils/auth';
 import { InlineInput } from "./ui/inlineInput";
 
@@ -12,6 +11,10 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
 
 export default function Home() {
+  console.log('home page');
+  useEffect(() => {
+    console.log('home page useEffect');
+  });
   // const [session, setSession] = useState(0);
   const [distance, setDistance] = useState(0);
   const [location, setLocation] = useState("");
@@ -40,29 +43,7 @@ export default function Home() {
         });
       }); 
     }
-  });
-  // checkSession().then((res) => {
-  //   setSession(res);
-  // });
-
-
-  // if (session == 1) {
-  //   //redirect to dashboard
-  //   return new Promise((resolve) => {
-  //     resolve(
-  //       (window.location.href = "/dashboard")
-  //     );
-  //   }
-  //   );
-  // } 
-  // else if (session == -1) {
-  //   return new Promise((resolve) => {
-  //     resolve(
-  //       (window.location.href = "/refresh-token")
-  //     );
-  //   }
-  //   );
-  // }
+  }, []);
 
   const handleDistanceChange = (e: any) => {
     const newDistance = e.target.value;
@@ -124,7 +105,7 @@ export default function Home() {
           <InlineInput placeholder=" distance" key='distance' onChangeCapture={handleDistanceChange} /> miles
           <br />
           of
-          <InlineInput placeholder=" city" key='city' value={city} onChangeCapture={handleCityChange} />
+          <InlineInput placeholder=" city" key='city' value={city} onChange={handleCityChange} />
         </h1>
         <div className="flex items-center justify-end  min-h-[20vh] p-5">
           <Button onClick={handleClick}>click to login to Spotify</Button>

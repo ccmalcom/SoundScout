@@ -1,20 +1,24 @@
-// 'use server'
+'use client'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { handleLogout } from '@/app/utils/auth';
 import Image from 'next/image';
+import { useRef, useEffect } from 'react';
 
 export default  function Links({img}: {img:string}){
     // circle of profile img with caret (to indicate dropdown) to the right
     // when clicked, dropdown with 'logout' and 'settings' options
     const url= img ? img :'https://via.placeholder.com/150';
-    const dropdown = document.querySelector('.dropdown');
+    const dropdownRef = useRef<Element | null>(null);
     
+    useEffect(() => {
+        dropdownRef.current = document.querySelector('.dropdown');
+    }, []);
     
     const toggle = () => {
-        if(dropdown){
-            dropdown.classList.toggle('hidden');
+        if(dropdownRef.current){
+            dropdownRef.current.classList.toggle('hidden');
         }
     }
 
