@@ -3,9 +3,10 @@ import useSWR from 'swr';
 import { Artist } from './types';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
-const fetcherWithArtists = async ([url, artistNames]: [string, string[]]) => {
+const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, string[], object]) => {
     // Your fetching logic here, using `url` and `artistNames`
-    const userSettings =  localStorage.getItem('userSettings')
+    let stringifiedArtists = JSON.stringify(artistNames);
+    let stringifiedUserSettings = JSON.stringify(userSettings);
     const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -60,12 +61,11 @@ export function useTopTracks() {
     }
 }
 
-export function useEvents(artistNames: string[]) {
+export function useEvents(artistNames: string[], userSettings: { location: string, city: string, distance: string }) {
     console.log('###HOOK### useEvents function hit');
     // const { data: orders } = useSWR(user ? ['/api/orders', user] : null, fetchWithUser)
     // const artistNames = topArtists.map(artist => artist.name);
-
-    const { data, error, isLoading } = useSWR(artistNames.length > 0 ? ['/ticketmaster/events', artistNames] : null, fetcherWithArtists,{
+    const { data, error, isLoading } = useSWR(['/ticketmaster/events', artistNames, userSettings], fetcherWithArtists,{
         dedupingInterval: 60000, 
         revalidateOnFocus: false, 
         revalidateOnReconnect: false, 
@@ -76,5 +76,4 @@ export function useEvents(artistNames: string[]) {
         isError: error
     }
 }
-
 

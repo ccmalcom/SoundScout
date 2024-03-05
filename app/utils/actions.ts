@@ -150,6 +150,7 @@ export async function getCityName(location: string) {
 };
 
 export async function getLatLong (city: string) {
+    console.log('getting lat long for city:', city);
     const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?localityName=${city}&localityLanguage=en`);
     const data = await res.json();
     console.log('get lat long data:', data);

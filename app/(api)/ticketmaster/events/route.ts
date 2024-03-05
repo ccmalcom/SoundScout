@@ -31,7 +31,9 @@ export async function POST(request: Request): Promise<Response> {
     // console.log('###TM ROUTE### top of post request, getting events for top artists...');
     let req = await request.json();
     const artistNames = req['artistNames'];
-    const userSettings = JSON.parse(req['userSettings']);
+    const userSettings = req['userSettings'];
+    // console.log('###TM ROUTE### artistNames', artistNames);
+    console.log('###TM ROUTE### userSettings', userSettings);
     const city = userSettings.city;
     const radius = userSettings.distance;
     const eventList = [];
