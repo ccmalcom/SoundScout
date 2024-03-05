@@ -60,10 +60,10 @@ export default function Events() {
     return (
         <div className="col-span-3 flex flex-col text-center justify-start mt-10 w-[90vw] min-h-[80vh]">
             <h1 className="mb-10"> Events</h1>
-            <div className="flex flex-row justify-center">
+            {/* <div className="flex flex-row justify-center">
                 <p className="text-xs">within <InlineInput placeholder="50" key='distance' value={distance} onChangeCapture={handleDistanceChange} /> miles of <InlineInput placeholder="city" key='city' value={city} onChangeCapture={handleCityChange} /></p>
                 <button onClick={handleSearch}>search</button>
-            </div>
+            </div> */}
             {eventsLoading ? (
                 <div className="flex justify-center items-start "> {/* Adjusted height to account for heading */}
                     <PropagateLoader color='#1BD760' size={15} />
