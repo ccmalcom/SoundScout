@@ -140,5 +140,20 @@ export async function hourFromNow() {
     return timeInOneHourDate;
 }
 
+export async function getCityName(location: string) {
+    const lat = location.split(',')[0];
+    const long = location.split(',')[1];
+    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=en`);
+    const data = await res.json();
+    console.log('get city name :', data.city);
+    return data.city;
+};
 
+export async function getLatLong (city: string) {
+    console.log('getting lat long for city:', city);
+    const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?localityName=${city}&localityLanguage=en`);
+    const data = await res.json();
+    console.log('get lat long data:', data);
+    return data;
+}
 

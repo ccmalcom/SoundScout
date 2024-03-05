@@ -5,6 +5,7 @@ export default async function eventSearch(params: { keyword: string, latlong: st
     let token = process.env.TM_CLIENT_KEY;
     let { keyword, latlong, startDateTime, radius, unit } = params;
     if (token) {
+        console.log(`looking for events with keyword: ${keyword}, latlong: ${latlong}, startDateTime: ${startDateTime}, radius: ${radius}, unit: ${unit}`);
         const url = `https://app.ticketmaster.com/discovery/v2/events.json?keyword=${keyword}&latlong=${latlong}&startDateTime=${startDateTime}&radius=${radius}&unit=${unit}&apikey=${token}`;
         try {
             let request = await fetch(url, { method: 'GET' });

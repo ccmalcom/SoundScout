@@ -1,5 +1,6 @@
 import eventSearch from "./eventSearch";
 // import mapEvents from "./mapEvents";
+import { getLatLong } from "@/app/utils/actions";
 import {Artist, Event} from "@/app/utils/types";
 
 function mapEvents(events: Array<Object>) {
@@ -29,23 +30,31 @@ function mapEvents(events: Array<Object>) {
 export async function POST(request: Request): Promise<Response> {
     // console.log('###TM ROUTE### top of post request, getting events for top artists...');
     let req = await request.json();
-    // console.log('###TM ROUTE### req', req);
     const artistNames = req['artistNames'];
-    const userSettings = JSON.parse(req['userSettings']);
-    // console.log('###TM ROUTE### userSettings', userSettings);
-    const latlong = userSettings.location;
+    const userSettings = req['userSettings'];
+    // console.log('###TM ROUTE### artistNames', artistNames);
+    console.log('###TM ROUTE### userSettings', userSettings);
+    const city = userSettings.city;
     const radius = userSettings.distance;
-    // const city = userSettings['city'];
-    // console.log('artistNames', artistNames);
     const eventList = [];
     const now = new Date(Date.now()).toISOString();
     let formattedNow = now.split('T')[0] + 'T00:00:00Z';
-    // console.log('###TM ROUTE### entering for loop');
+
+    let latLong = userSettings.location;
+    
+    if(!latLong && city) {
+        const location = await getLatLong(city);
+        latLong = location.latitude + ',' + location.longitude;
+        userSettings.location = location;
+        // localStorage.setItem('userSettings', JSON.stringify(userSettings));
+
+    }
+
+
     for (const artist of artistNames) {
-        // console.log('index: ', artistNames.indexOf(artist));
         let params = {
             keyword: artist,
-            latlong: latlong,
+            latlong: latLong,
             startDateTime: formattedNow,
             radius: radius,
             unit: 'miles'

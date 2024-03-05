@@ -9,8 +9,13 @@ export function middleware(request: NextRequest) {
     let isValidSession = 0;
     if (token) {
         const expiration = token.value.split('exp=')[1];
-        const date = new Date(expiration).toUTCString();
-        const now = new Date().toUTCString();
+        const date = new Date(expiration);
+        const now = new Date();
+        // console.log('###middleware### expiration: ', expiration);
+        // console.log('###middleware### date: ', date);
+        // console.log('###middleware### now: ', now);
+        // console.log('###middleware### date > now: ', date > now);
+        
         if (date > now) {
             isValidSession = 1; // Session is valid
         } else {
@@ -45,7 +50,7 @@ export function middleware(request: NextRequest) {
 export const config = {
     matcher: [
         {
-            source: '/((?!_next/static|_next/image|favicon.ico|callback).*)',
+            source: '/((?!_next/static|_next/image|favicon.ico|callback|dashboard).*)',
             missing: [
                 { type: 'header', key: 'next-router-prefetch' },
                 { type: 'header', key: 'purpose', value: 'prefetch' },
