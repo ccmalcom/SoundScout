@@ -10,7 +10,6 @@ import { InlineInput } from "../inlineInput";
 import { getLatLong } from "@/app/utils/actions";
 
 export default function Events() {
-    // Initialize state from localStorage or use defaults
     const [userSettings, setUserSettings] = useState(() => {
         const savedSettings = localStorage.getItem('userSettings');
         return savedSettings ? JSON.parse(savedSettings) : {};

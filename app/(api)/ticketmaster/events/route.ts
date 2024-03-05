@@ -33,22 +33,20 @@ export async function POST(request: Request): Promise<Response> {
     const artistNames = req['artistNames'];
     const userSettings = req['userSettings'];
     // console.log('###TM ROUTE### artistNames', artistNames);
-    console.log('###TM ROUTE### userSettings', userSettings);
+    // console.log('###TM ROUTE### userSettings', userSettings);
     const city = userSettings.city;
     const radius = userSettings.distance;
     const eventList = [];
     const now = new Date(Date.now()).toISOString();
     let formattedNow = now.split('T')[0] + 'T00:00:00Z';
-
-    let latLong = userSettings.location;
-    
-    if(!latLong && city) {
-        const location = await getLatLong(city);
-        latLong = location.latitude + ',' + location.longitude;
-        userSettings.location = location;
-        // localStorage.setItem('userSettings', JSON.stringify(userSettings));
-
+    const latLong = userSettings.location;
+    if (!latLong) {
+        return new Response('no location provided', {
+            status: 400
+        })
     }
+    
+   
 
 
     for (const artist of artistNames) {
@@ -63,11 +61,12 @@ export async function POST(request: Request): Promise<Response> {
             const res = await eventSearch(params);
             if (res._embedded) {
                 const events = await mapEvents(res._embedded.events);
-                // console.log('events found for ', artist);
+                console.log('events found for ', artist);
                 eventList.push(...events);
 
             } else {
-                // console.log('no events found for ', artist);
+                console.log('no events found for ', artist);
+                continue;
             }
         } catch (error) {
             console.warn(`Error getting events for ${artist}: ${error}`);
