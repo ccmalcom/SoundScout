@@ -19,7 +19,7 @@ export default function Page({ params }: { params: { id: string } }) {
     return (
         <div>
             <NavBar /> {/* externalize this to layout */}
+            <Button onClick={handleClick}>Go Back</Button>
             <Track trackId={params.id}/>
-            <Button onClick={handleClick} >Go Back</Button>
         </div>)
 }
