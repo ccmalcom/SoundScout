@@ -49,7 +49,6 @@ export type AudioFeatures = {
     energy: number;
     instrumentalness: number;
     liveness: number;
-    loudness: number;
     speechiness: number;
     valence: number;
 }

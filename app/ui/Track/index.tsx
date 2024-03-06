@@ -5,7 +5,7 @@ import { useTrack, useTrackFeatures, useTrackAnalysis } from "@/app/utils/hooks"
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
 import InfoTable from "./InfoTable";
-import AudioFeaturesWeb from "./AudioFeaturesWeb";
+import TrackRadarChart from "./TrackRadarChart";
 
 
 export default function Track({ trackId }: { trackId: string }) {
@@ -18,8 +18,8 @@ export default function Track({ trackId }: { trackId: string }) {
     //- audio features web graph
     // bottom row:
     // track info table
-    if (isLoading ) return <div>Loading...</div>
-    else{
+    if (isLoading) return <div>Loading...</div>
+    else {
         const thisTrack = {
             name: track.name,
             artist_name: track.artists[0].name,
@@ -45,14 +45,10 @@ export default function Track({ trackId }: { trackId: string }) {
                         </Link>
                     </div>
                 </div>
-                <InfoTable trackId={trackId}/>
-                <div className="audio-features-container text-center col-span-2">
-                    <h2>Audio Features</h2>
-                    <div className="audio-features-graph">
-                        {/* <AudioFeaturesWeb /> */}
-                        coming soon
-                    </div>
-                </div>
+                <TrackRadarChart />
+                <InfoTable trackId={trackId} />
+                {/* <AudioFeaturesWeb trackId={trackId} /> */}
+                {/* <ChartExample /> */}
             </div>
         )
     }
