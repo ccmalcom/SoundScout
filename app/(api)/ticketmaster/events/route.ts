@@ -46,8 +46,6 @@ export async function POST(request: Request): Promise<Response> {
         })
     }
     
-   
-
 
     for (const artist of artistNames) {
         let params = {

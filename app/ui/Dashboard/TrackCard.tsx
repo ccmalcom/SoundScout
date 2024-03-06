@@ -1,12 +1,13 @@
 import { Track } from '@/app/utils/types';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function TrackCard({ track }: Readonly<{ track: Track }>) {
 
     if (!track) return (<div>No Tracks Found</div>);
 
     return (
-    
+        <Link href={`/track/${track.id}`}>
         <div className="track-card w-full flex justify-center p-5">
             <div className='track-card-content text-center w-4/5 bg-gray-900 p-1 relative'>
                 <div className='flex flex-col items-center justify-center p-1'>
@@ -28,6 +29,7 @@ export default function TrackCard({ track }: Readonly<{ track: Track }>) {
                 </div>
             </div>
         </div>
+        </Link>
     )
 
 }

@@ -157,3 +157,49 @@ export async function getLatLong (city: string) {
     return data;
 }
 
+export async function translateKey(key: number){
+    // 0-11
+    let result = '';
+    switch(key){
+        case 0:
+            result = 'C';
+            break;
+        case 1:
+            result = 'C#';
+            break;
+        case 2:
+            result = 'D';
+            break;
+        case 3:
+            result = 'D#';
+            break;
+        case 4:
+            result = 'E';
+            break;
+        case 5:
+            result = 'F';
+            break;
+        case 6:
+            result = 'F#';
+            break;
+        case 7:
+            result = 'G';
+            break;
+        case 8:
+            result = 'G#';
+            break;
+        case 9:
+            result = 'A';
+            break;
+        case 10:
+            result = 'A#';
+            break;
+        case 11:
+            result = 'B';
+            break;
+        default:
+            result = 'C';
+            break;
+    }
+    return result;
+}
