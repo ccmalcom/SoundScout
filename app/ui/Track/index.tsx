@@ -24,7 +24,7 @@ export default function Track({ trackId }: { trackId: string }) {
             name: track.name,
             artist_name: track.artists[0].name,
             album_name: track.album.name,
-            release_date: (track.album.release_date).split('-')[0],
+            release_year: (track.album.release_date).split('-')[0],
             album_cover: track.album.images[0].url,
             url: track.external_urls.spotify
         }
@@ -38,7 +38,7 @@ export default function Track({ trackId }: { trackId: string }) {
                         <div>
                             <h1>{thisTrack.name}</h1>
                             <h2>{thisTrack.artist_name}</h2>
-                            <h3>{thisTrack.album_name} | {thisTrack.release_date}</h3>
+                            <h3>{thisTrack.album_name} | {thisTrack.release_year}</h3>
                         </div>
                         <Link href={thisTrack.url} target="_blank" rel="noreferrer noopener">
                             <Button >Play on Spotify</Button>
