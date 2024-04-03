@@ -17,9 +17,16 @@ export default function Page({ params }: { params: { id: string } }) {
     }
 
     return (
-        <div>
-            <NavBar /> {/* externalize this to layout */}
-            <Button onClick={handleClick}>Go Back</Button>
-            <Track trackId={params.id}/>
-        </div>)
+        <div className="flex flex-col min-h-screen">
+            <NavBar /> {/* Assume NavBar is full-width */}
+            <div className="flex justify-between items-start p-4">
+                {/* Empty div for spacing if needed */}
+                <div></div>
+                <Button onClick={handleClick} className="mt-4 mr-4 self-end">Go Back</Button>
+            </div>
+            <div className="flex-1">
+                <Track trackId={params.id}/>
+            </div>
+        </div>
+    );
 }

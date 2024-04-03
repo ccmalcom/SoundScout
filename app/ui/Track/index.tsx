@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { Track } from "@/app/utils/types";
-import { useTrack, useTrackFeatures, useTrackAnalysis } from "@/app/utils/hooks";
+import { useTrack, useTrackFeatures } from "@/app/utils/hooks";
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
 import InfoTable from "./InfoTable";
@@ -11,6 +11,7 @@ import TrackRadarChart from "./TrackRadarChart";
 export default function Track({ trackId }: { trackId: string }) {
 
     const { track, isLoading, isError } = useTrack(trackId);
+    const { trackFeatures, isLoading: featuresLoading, isError: featuresError } = useTrackFeatures(trackId);
 
     // layout will be:
     // top row: 
@@ -30,7 +31,7 @@ export default function Track({ trackId }: { trackId: string }) {
         }
         return (
             <div className='track-container grid grid-rows-2 grid-cols-2 p-8'>
-                <div className='track-header flex flex-row justify-between'>
+                <div className='track-header flex flex-row justify-evenly align-center text-center'>
                     <div className="track-header-img">
                         <Image src={thisTrack.album_cover} alt='album-cover' width={300} height={300} />
                     </div>
@@ -45,8 +46,8 @@ export default function Track({ trackId }: { trackId: string }) {
                         </Link>
                     </div>
                 </div>
-                <TrackRadarChart />
-                <InfoTable trackId={trackId} />
+                <TrackRadarChart trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError}/>
+                <InfoTable trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError} />
                 {/* <AudioFeaturesWeb trackId={trackId} /> */}
                 {/* <ChartExample /> */}
             </div>
