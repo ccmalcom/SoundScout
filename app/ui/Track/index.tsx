@@ -47,7 +47,7 @@ export default function Track({ trackId }: { trackId: string }) {
                     </div>
                 </div>
                 <TrackRadarChart trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError}/>
-                <InfoTable trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError} />
+                <InfoTable track={track} trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError} />
                 {/* <AudioFeaturesWeb trackId={trackId} /> */}
                 {/* <ChartExample /> */}
             </div>

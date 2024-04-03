@@ -52,7 +52,7 @@ function formatDuration(duration: number) {
     return minutes + ':' + (parseInt(seconds) < 10 ? '0' : '') + seconds;
 }
 
-export default function InfoTable({ trackFeatures, featuresLoading, featuresError }: { trackFeatures: any, featuresLoading: boolean, featuresError: boolean}) {
+export default function InfoTable({ trackFeatures, featuresLoading, featuresError, track }: { trackFeatures: any, featuresLoading: boolean, featuresError: boolean, track: any}) {
 
     // const { trackFeatures, isLoading: featuresLoading, isError: featuresError } = useTrackFeatures(trackId);
 
@@ -65,7 +65,7 @@ export default function InfoTable({ trackFeatures, featuresLoading, featuresErro
             mode: trackFeatures.mode === 1 ? 'Major' : 'Minor',
             time_signature: trackFeatures.time_signature + '/4',
             tempo: trackFeatures.tempo,
-            // popularity: trackFeatures.popularity,
+            popularity: track.popularity,
             // bars: trackFeatures.bars,
             // beats: trackFeatures.beats,
             // sections: trackFeatures.sections,
@@ -105,6 +105,10 @@ export default function InfoTable({ trackFeatures, featuresLoading, featuresErro
             //     </table>
             // </div>
             <div className='flex justify-evenly items-center col-span-2'>
+                <div className='flex flex-col justify-evenly items-center h-[60%]'>
+                    <div>Popularity</div>
+                    <div>{thisTrack.popularity}</div>
+                </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Duration</div>
                     <div>{thisTrack.duration}</div>
