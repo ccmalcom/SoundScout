@@ -24,6 +24,32 @@ const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, str
     return response.json();
 };
 
+// const eventFetcher = async ([url, trackId]: [string, string]) => {
+//     const response = await fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ trackId }), // Ensure this matches the expected format on the server
+//     });
+//     if (!response.ok) throw new Error('Failed to fetch');
+//     return response.json();
+
+// }
+
+// eventFetcher using get method and trackId as query param
+const trackFetcher = async ([url, trackId]: [string, string]) => {
+    const response = await fetch(url + '?trackId=' + trackId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) throw new Error('Failed to fetch');
+    return response.json();
+
+}
+
 
 export function useUser() {
     console.log('###HOOK### useUser function hit');
@@ -83,3 +109,44 @@ export function useEvents(artistNames: string[], userSettings: { location: strin
     }
 }
 
+export function useTrack(trackId: string) {
+    console.log('###HOOK### useTrack function hit');
+    const { data, error, isLoading } = useSWR([`/spotify/track/`, trackId], trackFetcher, {
+        dedupingInterval: 60000,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
+    return {
+        track: data,
+        isLoading,
+        isError: error
+    }
+}
+
+export function useTrackFeatures(trackId: string){
+    console.log('###HOOK### useTrackFeatures function hit');
+    const { data, error, isLoading } = useSWR([`/spotify/track/features/`, trackId], trackFetcher, {
+        dedupingInterval: 60000,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
+    return {
+        trackFeatures: data,
+        isLoading,
+        isError: error
+    }
+}
+
+export function useTrackAnalysis(trackId: string){
+    console.log('###HOOK### useTrackAnalysis function hit');
+    const { data, error, isLoading } = useSWR([`/spotify/track/analysis/`, trackId], trackFetcher, {
+        dedupingInterval: 60000,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
+    return {
+        trackAnalysis: data,
+        isLoading,
+        isError: error
+    }
+}

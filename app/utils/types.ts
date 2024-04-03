@@ -42,3 +42,13 @@ export type User = {
     display_name: string;
     images: Array<Image>;
 }
+
+export type AudioFeatures = {
+    acousticness: number;
+    danceability: number;
+    energy: number;
+    instrumentalness: number;
+    liveness: number;
+    speechiness: number;
+    valence: number;
+}
