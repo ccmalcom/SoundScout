@@ -17,10 +17,10 @@ export default function TopTracks() {
                 <div>Error loading top tracks...</div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
-                    {topTracks.map((track: any) => {
+                    {topTracks.map((track: any, index: number) => {
                         // console.log('track:', track);
                         return (
-                            <TrackCard track={track} key={track.id} />
+                            <TrackCard track={track} key={track.id} index={index} />
                         )
                     })}
                 </div>
