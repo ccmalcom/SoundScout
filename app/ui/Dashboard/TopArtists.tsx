@@ -16,8 +16,8 @@ export default function TopArtists() {
             ) : isError ? (
                 <div>Error loading top artists...</div>
             ) : (
-                topArtists.map((artist: Artist) => (
-                    <ArtistCard artist={artist} key={artist.id} />
+                topArtists.map((artist: Artist, index: number) => (
+                    <ArtistCard artist={artist} key={artist.id} index={index}/>
                 ))
             )}
         </div>

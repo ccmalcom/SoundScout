@@ -1,6 +1,6 @@
 'use client'
 import Image from "next/image";
-import { Track } from "@/app/utils/types";
+// import { Track } from "@/app/utils/types";
 import { useTrack, useTrackFeatures } from "@/app/utils/hooks";
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
@@ -30,8 +30,8 @@ export default function Track({ trackId }: { trackId: string }) {
             url: track.external_urls.spotify
         }
         return (
-            <div className='track-container grid grid-rows-2 grid-cols-2 p-8'>
-                <div className='track-header flex flex-row justify-evenly align-center text-center'>
+            <div className='track-container grid grid-rows-3 md:grid-rows-2 grid-cols-1 md:grid-cols-2 p-8'>
+                <div className='track-header flex flex-row justify-evenly align-center text-center md:col-span-1 col-span-2'>
                     <div className="track-header-img">
                         <Image src={thisTrack.album_cover} alt='album-cover' width={300} height={300} />
                     </div>
