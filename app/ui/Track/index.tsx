@@ -6,6 +6,7 @@ import { Button } from "@/app/ui/button";
 import Link from "next/link";
 import InfoTable from "./InfoTable";
 import TrackRadarChart from "./TrackRadarChart";
+import { PropagateLoader } from "react-spinners";
 
 
 export default function Track({ trackId }: { trackId: string }) {
@@ -19,7 +20,12 @@ export default function Track({ trackId }: { trackId: string }) {
     //- audio features web graph
     // bottom row:
     // track info table
-    if (isLoading) return <div>Loading...</div>
+    // debugger;
+    if (isLoading) return(
+        <div className="flex align-center justify-center pt-[20vh]">
+            <PropagateLoader color='#1BD760' size={15}/>
+        </div>
+    )
     else {
         const thisTrack = {
             name: track.name,
