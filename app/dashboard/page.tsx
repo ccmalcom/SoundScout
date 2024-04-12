@@ -5,6 +5,7 @@ import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
 import Footer from '../ui/Footer';
+import TimeRangeSelector from '../ui/Dashboard/TimeRangeSelector';
 
 export default function Page() {
     console.log('dashboard page');
@@ -46,6 +47,7 @@ export default function Page() {
                         <h1 className='pl-5 text-gray-700 events' onClick={changePage}>Events</h1>
                     </button>
                 </div>
+                <TimeRangeSelector />
                 <div className='flex justify-center'>
                     {page === 'dashboard' ? <Dashboard /> : <Events  />}
                 </div>

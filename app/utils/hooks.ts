@@ -3,6 +3,8 @@ import useSWR from 'swr';
 import { Artist } from './types';
 import { getLatLong } from './actions';
 
+let term = localStorage.getItem('timeRange') || 'short_term';
+
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, string[], { location: string, city: string, distance: string }]) => {
     // Your fetching logic here, using `url` and `artistNames`
@@ -66,7 +68,7 @@ export function useUser() {
 
 export function useTopArtists() {
     console.log('###HOOK### useTopArtists function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-artists', fetcher, {
+    const { data, error, isLoading } = useSWR(`/spotify/top-artists?term=${term}`, fetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -80,7 +82,7 @@ export function useTopArtists() {
 
 export function useTopTracks() {
     console.log('###HOOK### useTopTracks function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-tracks', fetcher, {
+    const { data, error, isLoading } = useSWR(`/spotify/top-tracks?term=${term}`, fetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,

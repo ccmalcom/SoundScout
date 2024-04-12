@@ -1,7 +1,5 @@
 import TopArtists from "./TopArtists";
 import TopTracks from "./TopTracks";
-import {Artist, Track} from "@/app/utils/types";
-
 
 export default function Dashboard() {
     return (
