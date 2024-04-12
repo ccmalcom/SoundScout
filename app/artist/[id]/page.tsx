@@ -15,11 +15,11 @@ export default function Page({ params }: { params: { id: string } }) {
     return (
         <div className="flex flex-col min-h-screen">
             <NavBar /> 
-            <div className="flex justify-between items-start p-4">
+            <div className="flex justify-center md:justify-between items-start p-4">
                 <div></div>
-                <Button onClick={handleClick} className="mt-4 mr-4 self-end">Go Back</Button>
+                <Button onClick={handleClick} className="mt-4 md:mr-12 self-end" variant="scout">Go Back</Button>
             </div>
-            <div className="flex-1">
+            <div className="min-w-[100vw] flex justify-center">
                 <Artist artistId={params.id}/>
             </div>
         </div>
