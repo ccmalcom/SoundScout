@@ -2,7 +2,6 @@
 -- events
     -- radius picker
     -- location change (zipcode first, then maps api (autocomplete address, convert to latlong))
--- artist pages
 -- able to change time param
 -- recently played section (ticker?)
 
