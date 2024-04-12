@@ -108,7 +108,7 @@ export default function Home() {
           <InlineInput placeholder=" city" key='city' value={city} onChange={handleCityChange} />
         </h1>
         <div className="flex items-center justify-end  min-h-[20vh] p-5">
-          <Button onClick={handleClick}>click to login to Spotify</Button>
+          <Button onClick={handleClick} variant="spotify">click to login to Spotify</Button>
         </div>
       </div>
     </main>

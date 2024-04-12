@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image";
-// import { Track } from "@/app/utils/types";
 import { useTrack, useTrackFeatures } from "@/app/utils/hooks";
 import { Button } from "@/app/ui/button";
 import Link from "next/link";
@@ -30,25 +29,23 @@ export default function Track({ trackId }: { trackId: string }) {
         }
         return (
             <div className='track-container grid grid-rows-3 md:grid-rows-2 grid-cols-1 md:grid-cols-2 p-8'>
-                <div className='track-header flex flex-row justify-evenly align-center text-center md:col-span-1 col-span-2'>
-                    <div className="track-header-img">
+                <div className='track-header flex flex-col md:flex-row justify-evenly align-center text-center md:col-span-1 col-span-2'>
+                    <div className="track-header-img flex justify-center">
                         <Image src={thisTrack.album_cover} alt='album-cover' width={300} height={300} />
                     </div>
                     <div className="track-header-details flex flex-col justify-evenly">
                         <div>
-                            <h1>{thisTrack.name}</h1>
+                            <h1 className="text-2xl">{thisTrack.name}</h1>
                             <h2>{thisTrack.artist_name}</h2>
                             <h3>{thisTrack.album_name} | {thisTrack.release_year}</h3>
                         </div>
                         <Link href={thisTrack.url} target="_blank" rel="noreferrer noopener">
-                            <Button >Play on Spotify</Button>
+                            <Button variant="spotify">Play on Spotify</Button>
                         </Link>
                     </div>
                 </div>
                 <TrackRadarChart trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError}/>
                 <InfoTable track={track} trackFeatures={trackFeatures} featuresLoading={featuresLoading} featuresError={featuresError} />
-                {/* <AudioFeaturesWeb trackId={trackId} /> */}
-                {/* <ChartExample /> */}
             </div>
         )
     }

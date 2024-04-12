@@ -2,14 +2,12 @@
 
 import { Chart } from 'chart.js/auto';
 import { useRef, useEffect } from 'react';
-import { useTrackFeatures } from '@/app/utils/hooks';
-import { logBase } from '@syncfusion/ej2-react-charts';
 
 export default function TrackRadarChart(props) {
-   
-   const { trackFeatures, featuresLoading, featuresError } = props;
-   console.log('trackFeatures', trackFeatures);
-        
+
+    const { trackFeatures, featuresLoading, featuresError } = props;
+    console.log('trackFeatures', trackFeatures);
+
     let colors = {
         'green': 'rgba(27, 215, 96, 0.5)',
         'evergreen': 'rgba(213, 244, 121, 0.5)',
@@ -26,19 +24,19 @@ export default function TrackRadarChart(props) {
         'black': 'rgba(0, 0, 0, 0.5)',
     };
     const chartRef = useRef(null);
-    
+
 
     useEffect(() => {
         if (chartRef.current) {
             if (chartRef.current.chart) {
                 chartRef.current.destroy();
             }
-        
-            
+
+
 
             const context = chartRef.current.getContext('2d');
             let data = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
-            if(trackFeatures){
+            if (trackFeatures) {
                 data = [
                     trackFeatures.danceability * 100,
                     trackFeatures.energy * 100,
@@ -84,7 +82,6 @@ export default function TrackRadarChart(props) {
             chartRef.current = newChart;
         }
     }, []);
-   
     return (
         <div className='relative m-auto h-[30vh] w-[30vw] text-center'>
             <h1 className='pb-5'>Track Features</h1>
