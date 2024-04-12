@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <NavBar /> 
             <div className="flex justify-between items-start p-4">
                 <div></div>
-                <Button onClick={handleClick} className="mt-4 mr-16 self-end" variant="scout">Go Back</Button>
+                <Button onClick={handleClick} className="mt-4 mr-16 self-end" >Go Back</Button>
             </div>
             <div className="flex-1">
                 <Track trackId={params.id}/>

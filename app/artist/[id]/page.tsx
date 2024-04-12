@@ -17,7 +17,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <NavBar /> 
             <div className="flex justify-center md:justify-between items-start p-4">
                 <div></div>
-                <Button onClick={handleClick} className="mt-4 md:mr-12 self-end" variant="scout">Go Back</Button>
+                <Button onClick={handleClick} className="mt-4 md:mr-12 self-end" >Go Back</Button>
             </div>
             <div className="min-w-[100vw] flex justify-center">
                 <Artist artistId={params.id}/>

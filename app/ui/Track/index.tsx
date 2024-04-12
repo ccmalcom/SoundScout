@@ -40,7 +40,7 @@ export default function Track({ trackId }: { trackId: string }) {
                             <h3>{thisTrack.album_name} | {thisTrack.release_year}</h3>
                         </div>
                         <Link href={thisTrack.url} target="_blank" rel="noreferrer noopener">
-                            <Button>Play on Spotify</Button>
+                            <Button variant="spotify">Play on Spotify</Button>
                         </Link>
                     </div>
                 </div>
