@@ -1,4 +1,3 @@
-import { useTrackFeatures } from "@/app/utils/hooks";
 
 function translateKey(key: number) {
     let result = '';
@@ -54,8 +53,6 @@ function formatDuration(duration: number) {
 
 export default function InfoTable({ trackFeatures, featuresLoading, featuresError, track }: { trackFeatures: any, featuresLoading: boolean, featuresError: boolean, track: any}) {
 
-    // const { trackFeatures, isLoading: featuresLoading, isError: featuresError } = useTrackFeatures(trackId);
-
     if (featuresLoading) return <div>Loading...</div>
     else if (featuresError) return <div>Error loading track features</div>
     else {
@@ -66,68 +63,33 @@ export default function InfoTable({ trackFeatures, featuresLoading, featuresErro
             time_signature: trackFeatures.time_signature + '/4',
             tempo: trackFeatures.tempo,
             popularity: track.popularity,
-            // bars: trackFeatures.bars,
-            // beats: trackFeatures.beats,
-            // sections: trackFeatures.sections,
-            // segments: trackFeatures.segments
         }
         return (
-            // <div className='track-info-table flex justify-evenly text-center '>
-            //     <table>
-            //         <thead>
-            //             <tr>
-            //                 <th>Feature</th>
-            //                 <th>Value</th>
-            //             </tr>
-            //         </thead>
-            //         <tbody>
-            //             <tr>
-            //                 <td>Duration</td>
-            //                 <td>{thisTrack.duration}</td>
-            //             </tr>
-            //             <tr>
-            //                 <td>Key</td>
-            //                 <td>{thisTrack.key}</td>
-            //             </tr>
-            //             <tr>
-            //                 <td>Mode</td>
-            //                 <td>{thisTrack.mode}</td>
-            //             </tr>
-            //             <tr>
-            //                 <td>Time Signature</td>
-            //                 <td>{thisTrack.time_signature}</td>
-            //             </tr>
-            //             <tr>
-            //                 <td>Tempo</td>
-            //                 <td>{thisTrack.tempo}</td>
-            //             </tr>
-            //         </tbody>
-            //     </table>
-            // </div>
-            <div className='flex justify-evenly items-center col-span-2'>
+            
+            <div className='flex flex-col md:flex-row justify-evenly items-center col-span-2'>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Popularity</div>
-                    <div>{thisTrack.popularity}</div>
+                    <div className="text-yellow">{thisTrack.popularity}</div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Duration</div>
-                    <div>{thisTrack.duration}</div>
+                    <div className="text-yellow">{thisTrack.duration}</div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Key</div>
-                    <div>{thisTrack.key}</div>
+                    <div className="text-yellow"> {thisTrack.key}</div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Mode</div>
-                    <div>{thisTrack.mode}</div>
+                    <div className="text-yellow">{thisTrack.mode}</div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Time Signature</div>
-                    <div>{thisTrack.time_signature}</div>
+                    <div className="text-yellow">{thisTrack.time_signature}</div>
                 </div>
                 <div className='flex flex-col justify-evenly items-center h-[60%]'>
                     <div>Tempo</div>
-                    <div>{thisTrack.tempo}</div>
+                    <div className="text-yellow">{thisTrack.tempo}</div>
                 </div>
             </div>
         )
