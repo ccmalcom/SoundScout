@@ -1,18 +1,14 @@
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"; // Fix the import
-import  Image from "next/image";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Logo() {
-  // logo is green circle 64x64 with white 'SpotiFind' text next to it
   return (
     <div className="flex items-center">
-      <div className="relative">
-        {/* <div className="h-12 w-12 bg-green rounded-full flex justify-center items-center">
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="absolute text-white text-2xl" /> 
-        </div> */}
-        <Image src="/logo.png" height={64} width={64} alt="logo" className="h-12 w-12 rounded-full" />
-      </div>
-      <h1 className="text-2xl font-bold ml-4">SetlistSeeker for Spotify</h1>
+      <h1 className="text-4xl font-bold ml-4">SoundScout</h1>
+      <h2 className="text-xl text-gray-600 ml-3">for</h2>
+      <Link href="https://www.spotify.com" target="_blank" rel="noopener noreferrer">
+      <Image src="/spotifyLogoFullWhite.png" alt="spotify-icon" width={75} height={50} className="ml-3"/>
+      </Link>
     </div>
   );
 }
