@@ -3,7 +3,7 @@
 import NavBar from "@/app/ui/NavBar";
 import { useRouter } from 'next/navigation';
 import { Button } from "@/app/ui/button";
-import  Track  from "@/app/ui/Track"
+import  Artist  from "@/app/ui/Artist"
 
 export default function Page({ params }: { params: { id: string } }) {
     const router = useRouter();
@@ -20,7 +20,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <Button onClick={handleClick} className="mt-4 mr-4 self-end">Go Back</Button>
             </div>
             <div className="flex-1">
-                <Track trackId={params.id}/>
+                <Artist artistId={params.id}/>
             </div>
         </div>
     );
