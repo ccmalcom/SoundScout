@@ -19,7 +19,7 @@ export default function RootLayout({
         <head>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>SpotiFind</title>
+          <title>SoundScout</title>
           <link rel="icon" 
           href="/public/icon.png"
           type="image/png"
