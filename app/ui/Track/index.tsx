@@ -14,13 +14,6 @@ export default function Track({ trackId }: { trackId: string }) {
     const { track, isLoading, isError } = useTrack(trackId);
     const { trackFeatures, isLoading: featuresLoading, isError: featuresError } = useTrackFeatures(trackId);
 
-    // layout will be:
-    // top row: 
-    //- album cover|track name, artist name, album name * year|play on spotify
-    //- audio features web graph
-    // bottom row:
-    // track info table
-    // debugger;
     if (isLoading) return(
         <div className="flex align-center justify-center pt-[20vh]">
             <PropagateLoader color='#1BD760' size={15}/>

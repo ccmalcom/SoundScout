@@ -12,7 +12,7 @@ export default function Logo() {
         </div> */}
         <Image src="/logo.png" height={64} width={64} alt="logo" className="h-12 w-12 rounded-full" />
       </div>
-      <h1 className="text-2xl font-bold ml-4">SpotiFind</h1>
+      <h1 className="text-2xl font-bold ml-4">SetlistSeeker for Spotify</h1>
     </div>
   );
 }
