@@ -65,7 +65,7 @@ export default function Events() {
             </div> */}
             {eventsLoading ? (
                 <div className="flex justify-center items-start "> {/* Adjusted height to account for heading */}
-                    <PropagateLoader color='#1BD760' size={15} />
+                    <PropagateLoader color='yellow' size={15} />
                 </div>
             ) : eventsError ? (
                 <div>Error loading events...</div>

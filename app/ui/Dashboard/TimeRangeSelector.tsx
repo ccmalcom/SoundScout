@@ -1,31 +1,18 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import DropdownInput from '@/app/ui/DropdownInput';
+import { get } from 'http';
 
 const TimeRangeSelector: React.FC = () => {
-    // const [selectedTimeRange, setSelectedTimeRange] = useState(()=>{
-    //     let range = 'short_term'
-    //     if(typeof window !== undefined) {
-    //         if(localStorage.getItem('timeRange') !== null){
-    //             range = localStorage.getItem('timeRange') as string;
-    //         }
-    //     }
-    //     return range;
-    // });
-    const [selectedTimeRange, setSelectedTimeRange] = useState('short_term');
     const getLocalStorage = () => {
         if (typeof window !== undefined) {
             if (localStorage.getItem('timeRange') !== null) {
                 return localStorage.getItem('timeRange') as string;
             }
         }
-        return 'short_term';
+        return '';
     };
-
-    useEffect(() => {
-        let term = getLocalStorage();
-        setSelectedTimeRange(term);
-    }, []);
+    const [selectedTimeRange, setSelectedTimeRange] = useState(getLocalStorage());
     
 
     const timeRanges = [

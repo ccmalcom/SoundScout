@@ -2,7 +2,7 @@
 
 import { figtree } from "@/app/ui/fonts";
 import { Button } from "./ui/button";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { handleLogin } from '@/app/utils/auth';
 import { InlineInput } from "./ui/inlineInput";
 import { getCityName, getLatLong } from '@/app/utils/actions';
@@ -25,11 +25,11 @@ export default function Home() {
   const [location, setLocation] = useState("");
   const [city, setCity] = useState("");
   
-  const handleLocationChange=(lat: string, long: string)=>{
+  const handleLocationChange=useCallback((lat: string, long: string)=>{
     const newLocation = lat + ',' + long;
     setLocation(newLocation);
     saveUserSettings(distance, city, newLocation);
-  }
+  }, [distance, city]);
 
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Home() {
         });
       }); 
     }
-  }, []);
+  }, [handleLocationChange, location]);
 
   const handleDistanceChange = (e: any) => {
     const newDistance = e.target.value;
