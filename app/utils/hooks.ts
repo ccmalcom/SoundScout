@@ -1,9 +1,8 @@
 'use client'
 import useSWR from 'swr';
-import { Artist } from './types';
 import { getLatLong } from './actions';
 
-let term = localStorage.getItem('timeRange') || 'short_term';
+let term = typeof window !== 'undefined'? localStorage.getItem('timeRange') : 'short_term';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, string[], { location: string, city: string, distance: string }]) => {
