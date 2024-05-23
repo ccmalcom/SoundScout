@@ -5,7 +5,6 @@ import NavBar from '../ui/NavBar';
 import Dashboard from '../ui/Dashboard';
 import Events from '../ui/Events';
 import Footer from '../ui/Footer';
-import TimeRangeSelector from '../ui/Dashboard/TimeRangeSelector';
 
 export default function Page() {
     console.log('dashboard page');
