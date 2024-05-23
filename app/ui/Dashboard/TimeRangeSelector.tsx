@@ -12,7 +12,15 @@ const TimeRangeSelector: React.FC = () => {
     //     }
     //     return range;
     // });
-    const [selectedTimeRange, setSelectedTimeRange] = useState('short_term');
+    const getLocalStorage = () => {
+        if (typeof window !== undefined) {
+            if (localStorage.getItem('timeRange') !== null) {
+                return localStorage.getItem('timeRange') as string;
+            }
+        } 
+        return 'short_term';
+    }
+    const [selectedTimeRange, setSelectedTimeRange] = useState(getLocalStorage);
     
     const timeRanges = [
         { value: 'short_term', label: 'Month' },
