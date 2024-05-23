@@ -14,7 +14,7 @@ export default function Page() {
             console.log('Dashboard Component will unmount');
         };
     }, []);
-    
+
 
 
     const [page, setPage] = useState('dashboard');
@@ -46,8 +46,9 @@ export default function Page() {
                         <h1 className='pl-5 text-gray-700 events' onClick={changePage}>Events</h1>
                     </button>
                 </div>
+
                 <div className='flex justify-center'>
-                    {page === 'dashboard' ? <Dashboard /> : <Events  />}
+                    {page === 'dashboard' ? <Dashboard /> : <Events />}
                 </div>
             </div>
             <Footer />

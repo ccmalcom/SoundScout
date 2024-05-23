@@ -1,7 +1,8 @@
 'use client'
 import useSWR from 'swr';
-import { Artist } from './types';
 import { getLatLong } from './actions';
+
+let term = typeof window !== 'undefined'? localStorage.getItem('timeRange') : 'short_term';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
 const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, string[], { location: string, city: string, distance: string }]) => {
@@ -24,30 +25,29 @@ const fetcherWithArtists = async ([url, artistNames, userSettings]: [string, str
     return response.json();
 };
 
-// const eventFetcher = async ([url, trackId]: [string, string]) => {
-//     const response = await fetch(url, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({ trackId }), // Ensure this matches the expected format on the server
-//     });
-//     if (!response.ok) throw new Error('Failed to fetch');
-//     return response.json();
-
-// }
-
 // eventFetcher using get method and trackId as query param
-const trackFetcher = async ([url, trackId]: [string, string]) => {
-    const response = await fetch(url + '?trackId=' + trackId, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-    if (!response.ok) throw new Error('Failed to fetch');
-    return response.json();
+const detailFetcher = async ([url, id]: [string, string]) => {
+    if (url.includes('track')) {
 
+        const response = await fetch(url + '?trackId=' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error('Failed to fetch');
+        return response.json();
+    } else if (url.includes('artist')) {
+        
+        const response = await fetch(url + '?artistId=' + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) throw new Error('Failed to fetch');
+        return response.json();
+    }
 }
 
 
@@ -67,7 +67,7 @@ export function useUser() {
 
 export function useTopArtists() {
     console.log('###HOOK### useTopArtists function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-artists', fetcher, {
+    const { data, error, isLoading } = useSWR(`/spotify/top-artists?term=${term}`, fetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -81,7 +81,7 @@ export function useTopArtists() {
 
 export function useTopTracks() {
     console.log('###HOOK### useTopTracks function hit');
-    const { data, error, isLoading } = useSWR('/spotify/top-tracks', fetcher, {
+    const { data, error, isLoading } = useSWR(`/spotify/top-tracks?term=${term}`, fetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -111,7 +111,7 @@ export function useEvents(artistNames: string[], userSettings: { location: strin
 
 export function useTrack(trackId: string) {
     console.log('###HOOK### useTrack function hit');
-    const { data, error, isLoading } = useSWR([`/spotify/track/`, trackId], trackFetcher, {
+    const { data, error, isLoading } = useSWR([`/spotify/track/`, trackId], detailFetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -123,9 +123,9 @@ export function useTrack(trackId: string) {
     }
 }
 
-export function useTrackFeatures(trackId: string){
+export function useTrackFeatures(trackId: string) {
     console.log('###HOOK### useTrackFeatures function hit');
-    const { data, error, isLoading } = useSWR([`/spotify/track/features/`, trackId], trackFetcher, {
+    const { data, error, isLoading } = useSWR([`/spotify/track/features/`, trackId], detailFetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
@@ -137,15 +137,29 @@ export function useTrackFeatures(trackId: string){
     }
 }
 
-export function useTrackAnalysis(trackId: string){
+export function useTrackAnalysis(trackId: string) {
     console.log('###HOOK### useTrackAnalysis function hit');
-    const { data, error, isLoading } = useSWR([`/spotify/track/analysis/`, trackId], trackFetcher, {
+    const { data, error, isLoading } = useSWR([`/spotify/track/analysis/`, trackId], detailFetcher, {
         dedupingInterval: 60000,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
     });
     return {
         trackAnalysis: data,
+        isLoading,
+        isError: error
+    }
+}
+
+export function useArtist(artistId: string) {
+    console.log('###HOOK### useArtist function hit');
+    const { data, error, isLoading } = useSWR([`/spotify/artist/`, artistId], detailFetcher, {
+        dedupingInterval: 60000,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
+    return {
+        artist: data,
         isLoading,
         isError: error
     }

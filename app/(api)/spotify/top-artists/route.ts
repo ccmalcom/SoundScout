@@ -1,8 +1,9 @@
 import { cookies } from 'next/headers';
 import { processToken } from '@/app/utils/actions';
 import { Artist } from '@/app/utils/types';
+import { NextRequest } from 'next/server';
 
-export async function GET(){
+export async function GET(request: NextRequest): Promise<Response>{
     console.log('getTopArtists function hit');
     const token = cookies().get('token')?.value;
     const mapArtists=(artists: Array<Object>)=> {
@@ -22,7 +23,7 @@ export async function GET(){
 
     if (token) {
         let access_token = await processToken(token, 'access');
-        let term = 'short_term';
+        const term = request.nextUrl.searchParams.get('term') || 'short_term';
         try {
             let request = await fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${term}`, {
                 method: 'GET',
