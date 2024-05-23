@@ -3,7 +3,16 @@ import React, { useState } from 'react';
 import DropdownInput from '@/app/ui/DropdownInput';
 
 const TimeRangeSelector: React.FC = () => {
-    const [selectedTimeRange, setSelectedTimeRange] = useState<string>(localStorage.getItem('timeRange') || 'short_term');
+    const [selectedTimeRange, setSelectedTimeRange] = useState(()=>{
+        let range = 'short_term'
+        if(typeof window !== undefined) {
+            if(localStorage.getItem('timeRange') !== null){
+                range = localStorage.getItem('timeRange') as string;
+            }
+        }
+        return range;
+    });
+    
     const timeRanges = [
         { value: 'short_term', label: 'Month' },
         { value: 'medium_term', label: '6 Months' },
