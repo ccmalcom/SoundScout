@@ -1,20 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import DropdownInput from '@/app/ui/DropdownInput';
-import { get } from 'http';
 
 const TimeRangeSelector: React.FC = () => {
-    const getLocalStorage = () => {
-        if (typeof window !== undefined) {
-            if (localStorage.getItem('timeRange') !== null) {
-                return localStorage.getItem('timeRange') as string;
-            }
-        }
-        return '';
-    };
-    const [selectedTimeRange, setSelectedTimeRange] = useState(getLocalStorage());
-    
+    // const [selectedTimeRange, setSelectedTimeRange] = useState('');
+    if (typeof window === undefined) return null;
 
+    const timeRange =  localStorage.getItem('timeRange');
+    let selectedTimeRange = timeRange ? timeRange : 'short_term';
     const timeRanges = [
         { value: 'short_term', label: 'Month' },
         { value: 'medium_term', label: '6 Months' },
@@ -22,7 +15,7 @@ const TimeRangeSelector: React.FC = () => {
     ];
 
     const handleChange = (value: string) => {
-        setSelectedTimeRange(value);
+        selectedTimeRange = value;
         localStorage.setItem('timeRange', value);
         //refresh the page
         window.location.reload();
