@@ -15,7 +15,7 @@ export default function Track({ trackId }: { trackId: string }) {
 
     if (isLoading) return(
         <div className="flex align-center justify-center pt-[20vh]">
-            <PropagateLoader color='#1BD760' size={15}/>
+            <PropagateLoader color='yellow' size={15}/>
         </div>
     )
     else {

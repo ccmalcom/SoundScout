@@ -11,7 +11,7 @@ export default function TopArtists() {
             <h1>Top Artists</h1>
             {isLoading ? (
                 <div className="flex justify-center items-center h-full w-full"> 
-                    <PropagateLoader color='#1BD760' size={15} />
+                    <PropagateLoader color='yellow' size={15} />
                 </div>
             ) : isError ? (
                 <div>Error loading top artists...</div>

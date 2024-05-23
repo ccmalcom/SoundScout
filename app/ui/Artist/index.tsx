@@ -9,7 +9,7 @@ export default function Artist({ artistId }: { artistId: string }) {
     const { artist, isLoading, isError } = useArtist(artistId);
     if (isLoading) return (
         <div className="flex align-center justify-center pt-[20vh]">
-            <PropagateLoader color='#1BD760' size={15} />
+            <PropagateLoader color='yellow' size={15} />
         </div>
     )
     else if (isError) return (
