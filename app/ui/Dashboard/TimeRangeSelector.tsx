@@ -1,12 +1,10 @@
-'use client'
-import React, { useCallback, useEffect, useState } from 'react';
+// 'use client'
+import React from 'react';
 import DropdownInput from '@/app/ui/DropdownInput';
 
 const TimeRangeSelector: React.FC = () => {
     // const [selectedTimeRange, setSelectedTimeRange] = useState('');
     if (typeof window !== undefined) {
-
-        
         const timeRange = localStorage.getItem('timeRange');
         let selectedTimeRange = timeRange ? timeRange : 'short_term';
         const timeRanges = [
